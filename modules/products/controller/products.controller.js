@@ -1,4 +1,4 @@
-const Product = require('../models/product'); // Adjust the path according to your project structure
+const Product = require('../models/products.model'); // Adjust the path according to your project structure
 
 
 exports.createProduct = async (req, res) => {
