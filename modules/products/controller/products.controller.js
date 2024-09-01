@@ -1,4 +1,4 @@
-const Product = require('../models/products.model'); // Adjust the path according to your project structure
+const Product = require('../models/products.model');
 
 
 exports.createProduct = async (req, res) => {
@@ -14,10 +14,10 @@ exports.createProduct = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
         try {
-            const { provider, name, minPrice, maxPrice, isKosher, containsGluten } = req.query;
+            const { supplier, name, minPrice, maxPrice, isKosher, containsGluten } = req.query;
 
             const query = {
-                ...(provider && { provider }),
+                ...(supplier && { supplier }),
                 ...(name && { name: new RegExp(name, 'i') }),
                 ...(minPrice && { price: { $gte: minPrice } }),
                 ...(maxPrice && { price: { $lte: maxPrice } }),

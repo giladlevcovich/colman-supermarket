@@ -6,9 +6,9 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         auto: true,
     },
-    provider: {
+    supplier: {
         type: Schema.Types.ObjectId,
-        ref: 'Provider',
+        ref: 'Suppliers',
         required: true,
     },
     name: {
