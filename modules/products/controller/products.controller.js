@@ -48,19 +48,25 @@ exports.getProductById = async (req, res) => {
 
 exports.updateProductById = async (req, res) => {
     try {
+        const { id } = req.params;
+        const updateField = req.body;
+
         const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
+            id,
+            { $set: updateField },
             { new: true, runValidators: true }
         );
+
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
+
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 
 exports.deleteProductById = async (req, res) => {
