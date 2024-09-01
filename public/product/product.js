@@ -4,7 +4,7 @@ $(document).ready(function() {
         $('#additionalFilters').toggle(); // הצגת או הסתרת הסינונים הנוספים
     });
 
-    $('#searchProducts').click(function() {
+    function search() {
         const name = $('#name').val();
         const supplier = $('#supplier').val();
         const containsGluten = $('#containsGluten').val();
@@ -50,9 +50,10 @@ $(document).ready(function() {
                 $('#productList').empty().append('<p>Error loading products.</p>');
             }
         });
-    });
+    }
 
-    // אפשרות לאיפוס פילטרים
+    $('#searchProducts').click(search)
+
     $('#resetFilters').click(function() {
         $('#name').val('');
         $('#supplier').val('');
@@ -60,8 +61,8 @@ $(document).ready(function() {
         $('#isKosher').val('');
         $('#minPrice').val('');
         $('#maxPrice').val('');
+        search()
     });
 
-    // טוען את כל המוצרים כשלא ממלאים פילטרים
     $('#searchProducts').trigger('click');
 });
