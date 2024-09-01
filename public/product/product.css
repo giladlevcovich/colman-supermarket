@@ -1,34 +1,33 @@
-/* styles.css */
+/* style.css */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
     padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    text-align: center;
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    display: block;
-    width: 200px;
-    margin: 20px auto;
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 16px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -36,15 +35,78 @@ button:hover {
     background-color: #0056b3;
 }
 
-#productList {
-    margin-top: 20px;
+.additional-filters {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.additional-filters input,
+.additional-filters select {
+    width: 19%;
+    padding: 10px;
+    margin-right: 1%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .product-item {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(25% - 20px); /* גודל המוצר ביחס למסך רחב */
+    box-sizing: border-box;
+    max-width: calc(25% - 20px); /* כדי לאפשר התאמה רספונסיבית */
 }
 
-.product-item:last-child {
-    border-bottom: none;
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+.product-item img {
+    max-width: 100%; /* כדי שהתמונה לא תחרוג מהמסגרת שלה */
+    max-height: 200px; /* גובה מקסימלי של 200 פיקסלים */
+    width: auto; /* שמירת יחס הגובה-רוחב המקורי */
+    height: auto; /* שמירת יחס הגובה-רוחב המקורי */
+    display: block;
+    margin: 0 auto; /* כדי למרכז את התמונה אם היא קטנה מהמסגרת */
+    object-fit: contain; /* התמונה תתאים למסגרת מבלי להיחתך */
+}
+
+
+/* מדיה קווריז למסכים בינוניים */
+@media (max-width: 1024px) {
+    .product-item {
+        flex: 1 1 calc(33.33% - 20px);
+        max-width: calc(33.33% - 20px);
+    }
+}
+
+/* מדיה קווריז למסכים קטנים */
+@media (max-width: 768px) {
+    .product-item {
+        flex: 1 1 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+}
+
+/* מדיה קווריז למסכים קטנים מאוד */
+@media (max-width: 480px) {
+    .product-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }

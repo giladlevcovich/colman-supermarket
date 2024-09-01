@@ -1,11 +1,33 @@
 // script.js
 $(document).ready(function() {
-    $('#loadProducts').click(function() {
+    $('#toggleFilters').click(function() {
+        $('#additionalFilters').toggle(); // הצגת או הסתרת הסינונים הנוספים
+    });
+
+    $('#searchProducts').click(function() {
+        const name = $('#name').val();
+        const supplier = $('#supplier').val();
+        const containsGluten = $('#containsGluten').val();
+        const isKosher = $('#isKosher').val();
+        const minPrice = $('#minPrice').val();
+        const maxPrice = $('#maxPrice').val();
+
+        const queryParams = [];
+
+        if (name) queryParams.push(`name=${encodeURIComponent(name)}`);
+        if (supplier) queryParams.push(`supplier=${encodeURIComponent(supplier)}`);
+        if (containsGluten) queryParams.push(`containsGluten=${encodeURIComponent(containsGluten)}`);
+        if (isKosher) queryParams.push(`isKosher=${encodeURIComponent(isKosher)}`);
+        if (minPrice) queryParams.push(`minPrice=${encodeURIComponent(minPrice)}`);
+        if (maxPrice) queryParams.push(`maxPrice=${encodeURIComponent(maxPrice)}`);
+
+        const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+
         $.ajax({
-            url: 'http://localhost:80/api/products',
+            url: `http://localhost:80/api/products${queryString}`,
             method: 'GET',
             success: function(data) {
-                $('#productList').empty();
+                $('#productList').empty(); // ניקוי התצוגה הקיימת
                 if (data.length > 0) {
                     data.forEach(product => {
                         $('#productList').append(`
@@ -15,7 +37,7 @@ $(document).ready(function() {
                                 <p><strong>Price:</strong> ${product.price}₪</p>
                                 <p><strong>Is Kosher:</strong> ${product.isKosher ? 'Yes' : 'No'}</p>
                                 <p><strong>Contains Gluten:</strong> ${product.containsGluten ? 'Yes' : 'No'}</p>
-                                <img src="${product.image}" alt="${product.name}" style="max-width: 200px;">
+                                <img src="${product.image}" alt="${product.name}">
                             </div>
                         `);
                     });
@@ -29,4 +51,17 @@ $(document).ready(function() {
             }
         });
     });
+
+    // אפשרות לאיפוס פילטרים
+    $('#resetFilters').click(function() {
+        $('#name').val('');
+        $('#supplier').val('');
+        $('#containsGluten').val('');
+        $('#isKosher').val('');
+        $('#minPrice').val('');
+        $('#maxPrice').val('');
+    });
+
+    // טוען את כל המוצרים כשלא ממלאים פילטרים
+    $('#searchProducts').trigger('click');
 });

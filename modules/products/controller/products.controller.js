@@ -13,24 +13,28 @@ exports.createProduct = async (req, res) => {
 
 
 exports.getProducts = async (req, res) => {
-        try {
-            const { supplier, name, minPrice, maxPrice, isKosher, containsGluten } = req.query;
+    try {
+        const { supplier, name, minPrice, maxPrice, isKosher, containsGluten } = req.query;
 
-            const query = {
-                ...(supplier && { supplier }),
-                ...(name && { name: new RegExp(name, 'i') }),
-                ...(minPrice && { price: { $gte: minPrice } }),
-                ...(maxPrice && { price: { $lte: maxPrice } }),
-                ...(isKosher !== undefined && { isKosher: isKosher === 'true' }),
-                ...(containsGluten !== undefined && { containsGluten: containsGluten === 'true' }),
-            };
+        const priceFilter = {};
+        if (minPrice) priceFilter.$gte = minPrice;
+        if (maxPrice) priceFilter.$lte = maxPrice;
 
-            const products = await Product.find(query);
-            res.status(200).json(products);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
+        const query = {
+            ...(supplier && { supplier }),
+            ...(name && { name: new RegExp(name, 'i') }),
+            ...(Object.keys(priceFilter).length && { price: priceFilter }),
+            ...(isKosher !== undefined && { isKosher: isKosher === 'true' }),
+            ...(containsGluten !== undefined && { containsGluten: containsGluten === 'true' }),
+        };
+
+        const products = await Product.find(query);
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
+
 
 
 exports.getProductById = async (req, res) => {

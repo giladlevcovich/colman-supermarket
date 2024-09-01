@@ -9,10 +9,40 @@
     <script src="product.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1>Product List</h1>
-    <button id="loadProducts">Load Products</button>
-    <div id="productList"> </div>
+<div class="header-buttons">
+    <a href="personal-area.html" class="header-button personal-area">
+        <img src="personal-icon.png" alt="Personal Area" />
+    </a>
+    <a href="shopping-cart.html" class="header-button shopping-cart">
+        <img src="cart-icon.png" alt="Shopping Cart" />
+    </a>
 </div>
+<div class="search-container">
+    <input type="text" id="name" placeholder="Search by product name..." class="search-bar">
+    <button id="toggleFilters">More Filters</button>
+</div>
+
+<div id="additionalFilters" class="additional-filters">
+    <input type="text" id="supplier" placeholder="Supplier ID">
+    <select id="containsGluten">
+        <option value="">Contains Gluten</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <select id="isKosher">
+        <option value="">Is Kosher</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <input type="number" id="minPrice" placeholder="Min Price">
+    <input type="number" id="maxPrice" placeholder="Max Price">
+</div>
+
+<div class="button-container">
+    <button id="searchProducts">Search</button>
+    <button id="resetFilters">Reset</button>
+</div>
+
+<div id="productList" class="product-list"></div>
 </body>
 </html>
