@@ -1,1 +1,1 @@
-module.exports = require('./controller')
+module.exports = require('./controller/products.routes')
