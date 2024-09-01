@@ -41,7 +41,20 @@
             suppliers.forEach(supplier => {
                 L.marker([supplier.location.lat, supplier.location.lng])
                     .addTo(map)
-                    .bindPopup(`<b>${supplier.name}</b>`);
+                    .bindPopup(
+                      `
+                     <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <p class="card-text" style="font-size: 14px;">
+                                    <strong>Supplier:</strong> ${supplier.name.toUpperCase()}<br>
+                                    <strong>Street:</strong> ${supplier.address.street}<br>
+                                    <strong>City:</strong> ${supplier.address.city}<br>
+                                    <strong>State:</strong> ${supplier.address.state}
+                                </p>
+                            </div>
+                        </div>
+                      `
+                    );
             });
         }
     </script>
