@@ -9,5 +9,6 @@ router.get('/suppliers', productController.getAllSuppliers);
 router.get('/suppliers/:id', productController.getSupplierById);
 router.put('/suppliers/:id', productController.updateSupplierById);
 router.delete('/suppliers/:id', productController.deleteSupplierById);
+// TODO: implement the add supplier route
 
 module.exports = router;
