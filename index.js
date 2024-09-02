@@ -10,7 +10,7 @@ app.use(cors())
 const productRouter = require('./modules/products');
 const supplierRouter = require('./modules/suppliers/suppliers.routes')
 app.use('/api', productRouter);
-app.use('/supplier', supplierRouter)
+app.use('/api', supplierRouter)
 
 
 mongoose.connect('mongodb+srv://morankristal:Ramzi123@colman-supermarket-mong.fkyma.mongodb.net/', {

@@ -1,4 +1,4 @@
-const Supplier = require('./suppliers.module');
+const Supplier = require('./suppliers.model');
 
 
 exports.createSupplier = async (req, res) => {

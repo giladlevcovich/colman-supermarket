@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const {Schema} = require("mongoose");
 
 const supplierSchema = new mongoose.Schema({
+    _id: {
+        type: Schema.Types.ObjectId,
+        auto: true,
+    },
     name: {
         type: String,
         required: true
