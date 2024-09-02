@@ -1,4 +1,3 @@
-// script.js
 $(document).ready(function() {
     $('#toggleFilters').click(function() {
         $('#additionalFilters').toggle();
@@ -52,9 +51,9 @@ $(document).ready(function() {
         });
     }
 
-    $('#searchProducts').click(search)
+    $('#searchButton').click(search)
 
-    $('#resetFilters').click(function() {
+    $('#clearButton').click(function() {
         $('#name').val('');
         $('#supplier').val('');
         $('#containsGluten').val('');
@@ -64,5 +63,25 @@ $(document).ready(function() {
         search()
     });
 
-    $('#searchProducts').trigger('click');
+    $('#searchButton').trigger('click');
+
+    $(document).ready(function() {
+        // הצגת המודל כאשר לוחצים על הכפתור
+        $("#showVideoButton").click(function() {
+            $("#videoModal").fadeIn();
+        });
+
+        // סגירת המודל כאשר לוחצים על כפתור הסגירה
+        $(".close").click(function() {
+            $("#videoModal").fadeOut();
+        });
+
+        // סגירת המודל כאשר לוחצים מחוץ לתוכן המודל
+        $(window).click(function(event) {
+            if ($(event.target).is("#videoModal")) {
+                $("#videoModal").fadeOut();
+            }
+        });
+    });
+
 });
