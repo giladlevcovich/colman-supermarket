@@ -15,14 +15,14 @@ body {
     top: 0;
     width: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* מוודא שההדר יהיה מעל לתוכן אחר */
-    box-sizing: border-box; /* כולל padding ב-width */
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
 .header-button {
     display: flex;
     align-items: center;
-    text-decoration: none; /* מסיר קו תחתון מהכפתור */
+    text-decoration: none;
 }
 
 .header-button img {
@@ -33,8 +33,8 @@ body {
 .search-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* מרכז את שורת החיפוש */
-    margin-top: 70px; /* מוסיף מרווח כדי שהשורת חיפוש לא תכוסה על ידי ההדר */
+    align-items: center;
+    margin-top: 70px;
     padding: 10px;
 }
 
@@ -67,7 +67,7 @@ button:hover {
 
 .additional-filters input,
 .additional-filters select {
-    width: 100%; /* עושה את התצוגה מתאימה לרוחב הכלי */
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -83,7 +83,7 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center; /* ממקם את המוצרים במרכז */
+    justify-content: center;
 }
 
 .product-item {
@@ -91,43 +91,44 @@ button:hover {
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(25% - 20px); /* גודל המוצר ביחס למסך רחב */
+    flex: 1 1 calc(25% - 20px);
     box-sizing: border-box;
-    max-width: calc(25% - 20px); /* כדי לאפשר התאמה רספונסיבית */
+    max-width: calc(25% - 20px);
     display: flex;
     flex-direction: column;
-    align-items: center; /* מרכז את התמונה והטקסט */
+    align-items: center;
 }
+
+.product-item p{
+    margin: 5px;
+}
+
 
 .product-item img {
-    max-width: 100%; /* כדי שהתמונה לא תחרוג מהמסגרת שלה */
-    max-height: 200px; /* גובה מקסימלי של 200 פיקסלים */
-    width: auto; /* שמירת יחס הגובה-רוחב המקורי */
-    height: auto; /* שמירת יחס הגובה-רוחב המקורי */
-    object-fit: contain; /* התמונה תתאים למסגרת מבלי להיחתך */
-    margin-bottom: 10px; /* מוסיף מרווח בין התמונה לטקסט */
+    max-width: 100%;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
 
-/* מדיה קווריז למסכים בינוניים */
 @media (max-width: 1024px) {
-    .product-item {
-        flex: 1 1 calc(33.33% - 20px);
-        max-width: calc(33.33% - 20px);
-    }
+.product-item {
+    flex: 1 1 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+}
 }
 
-/* מדיה קווריז למסכים קטנים */
 @media (max-width: 768px) {
-    .product-item {
-        flex: 1 1 calc(50% - 20px);
-        max-width: calc(50% - 20px);
-    }
+.product-item {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+}
 }
 
-/* מדיה קווריז למסכים קטנים מאוד */
 @media (max-width: 480px) {
-    .product-item {
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
+.product-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
 }

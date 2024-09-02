@@ -58,6 +58,5 @@ const supplierSchema = new mongoose.Schema({
     }
 });
 
-// Optional: Create a geospatial index on the location field
 supplierSchema.index({ location: '2dsphere' });
 module.exports = mongoose.model('Supplier', supplierSchema);

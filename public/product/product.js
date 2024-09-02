@@ -1,7 +1,7 @@
 // script.js
 $(document).ready(function() {
     $('#toggleFilters').click(function() {
-        $('#additionalFilters').toggle(); // הצגת או הסתרת הסינונים הנוספים
+        $('#additionalFilters').toggle();
     });
 
     function search() {
@@ -27,13 +27,13 @@ $(document).ready(function() {
             url: `http://localhost:80/api/products${queryString}`,
             method: 'GET',
             success: function(data) {
-                $('#productList').empty(); // ניקוי התצוגה הקיימת
+                $('#productList').empty();
                 if (data.length > 0) {
                     data.forEach(product => {
                         $('#productList').append(`
                             <div class="product-item">
                                 <h2>${product.name}</h2>
-                                <p><strong>Supplier:</strong> ${product.supplier}</p>
+                                <p><strong>Supplier:</strong> ${product.supplier?.name}</p>
                                 <p><strong>Price:</strong> ${product.price}₪</p>
                                 <p><strong>Is Kosher:</strong> ${product.isKosher ? 'Yes' : 'No'}</p>
                                 <p><strong>Contains Gluten:</strong> ${product.containsGluten ? 'Yes' : 'No'}</p>
