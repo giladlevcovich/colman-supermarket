@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -14,152 +14,6 @@ h1 {
     text-align: center;
 }
 
-.search-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-#searchInput {
-    width: 70%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#searchButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-left: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#searchButton:hover {
-    background-color: #0056b3;
-}
-
-.product-list-container {
-    margin-top: 20px;
-}
-
-#addProductButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-#addProductButton:hover {
-    background-color: #218838;
-}
-
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.product-item {
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(50% - 20px);
-    box-sizing: border-box;
-    max-width: calc(50% - 20px);
-}
-
-.product-item img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.product-item button {
-    padding: 10px 15px;
-    font-size: 14px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.product-item .edit {
-    background-color: #ffc107;
-    color: white;
-}
-
-.product-item .delete {
-    background-color: #dc3545;
-    color: white;
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 4px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#saveProductButton {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#saveProductButton:hover {
-    background-color: #0056b3;
-}
-/* סגנונות כלליים */
-body {
-    font-family: Arial, sans-serif;
-}
-
-/* סגנונות עבור מיכל החיפוש */
 .search-container {
     display: flex;
     align-items: center;
@@ -192,7 +46,6 @@ body {
     background-color: #dc3545;
 }
 
-/* עיצוב של הכפתורים */
 #searchButton:hover {
     background-color: #0056b3;
 }
@@ -201,63 +54,61 @@ body {
     background-color: #c82333;
 }
 
-/* עיצוב של המודאל */
-.modal {
-    display: none; /* נסתר כברירת מחדל */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4); /* צבע הרקע של המודאל */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* עיצוב של פרטי המוצר */
-.product-item {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
+.product-list-container {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#addProductButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#addProductButton:hover {
+    background-color: #218838;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* מותאם למספר עמודות לפי גודל המסך */
     gap: 10px;
+    width: 100%;
+}
+
+.product-item {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* צמצום הרווחים בין השדות */
 }
 
 .product-item img {
-    max-width: 100%;
-    border-radius: 8px;
+    max-width: 100px; /* הקטנת גודל התמונה */
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.product-item p{
+    margin: 5px;
 }
 
 .product-item button {
-    padding: 8px 12px;
+    padding: 6px 12px;
+    font-size: 14px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -279,3 +130,95 @@ body {
 .product-item .delete:hover {
     background-color: #c82333;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    display: flex;
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 4px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.modal-content input, .modal-content select, .modal-content label {
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.modal-content label{
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.modal-content select{
+    width: 300px;
+    cursor: pointer;
+}
+
+.modal-content button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content button:active {
+    background-color: #1e7e34;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+
+
+#productSupplier option:first-child {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+

@@ -34,11 +34,11 @@ $(document).ready(function () {
             url: 'http://localhost:80/api/suppliers',
             method: 'GET',
             success: function (data) {
-                $('#productSupplier').empty();
+                const supplierSelect = $('#productSupplier');
+                supplierSelect.empty(); // ניקוי אפשרויות קודמות
+                supplierSelect.append('<option value="" disabled selected>Select a Supplier</option>');
                 data.forEach(supplier => {
-                    $('#productSupplier').append(`
-                        <option value="${supplier._id}">${supplier.name}</option>
-                    `);
+                    supplierSelect.append(`<option value="${supplier._id}">${supplier.name}</option>`);
                 });
             },
             error: function (error) {

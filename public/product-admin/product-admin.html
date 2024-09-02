@@ -31,7 +31,9 @@
         <h2 id="modalTitle">Add/Edit Product</h2>
         <input type="text" id="productName" placeholder="Product Name">
         <input type="number" id="productPrice" placeholder="Price">
-        <select id="productSupplier"></select> <!-- שדה ספק ישודרג לאופציות -->
+        <select id="productSupplier" name="supplier">
+            <option value="" disabled selected>Select a Supplier</option>
+        </select>
         <input type="text" id="productImage" placeholder="Image URL">
         <label>
             <input type="checkbox" id="productKosher"> Kosher
