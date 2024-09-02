@@ -1,31 +1,4 @@
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
 
 #searchInput {
     padding: 8px;
@@ -33,88 +6,6 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
     flex: 1;
-}
-
-#searchButton, #clearButton {
-    padding: 8px 16px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #fff;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#searchButton {
-    background-color: #007bff;
-}
-
-#clearButton {
-    background-color: #dc3545;
-}
-
-#searchButton:hover {
-    background-color: #0056b3;
-}
-
-#clearButton:hover {
-    background-color: #c82333;
-}
-
-.product-list-container {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#addProductButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#addProductButton:hover {
-    background-color: #218838;
-}
-
-.product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* מותאם למספר עמודות לפי גודל המסך */
-    gap: 10px;
-    width: 100%;
-    column-count: 3;
-    column-gap: 20px;
-}
-
-.product-item {
-    background-color: white;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    break-inside: avoid;
-}
-
-.product-item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
-
-.product-item p {
-    margin: 5px;
 }
 
 .product-item button {
@@ -231,4 +122,25 @@ h1 {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.createButton{
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    border-radius: 100%;
+    background-color: dodgerblue;
+    color: white;
+    font-weight: 500;
+    height: 42px;
+    width: 42px;
+    border: none;
+    cursor: pointer;
+    font-size: 28px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.createButton:hover{
+    background-color: #176abc;
 }

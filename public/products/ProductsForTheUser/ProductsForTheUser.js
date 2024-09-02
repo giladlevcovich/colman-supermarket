@@ -52,9 +52,9 @@ $(document).ready(function() {
         });
     }
 
-    $('#searchProducts').click(search)
+    $('#searchButton').click(search)
 
-    $('#resetFilters').click(function() {
+    $('#clearButton').click(function() {
         $('#name').val('');
         $('#supplier').val('');
         $('#containsGluten').val('');
@@ -64,5 +64,5 @@ $(document).ready(function() {
         search()
     });
 
-    $('#searchProducts').trigger('click');
+    $('#searchButton').trigger('click');
 });

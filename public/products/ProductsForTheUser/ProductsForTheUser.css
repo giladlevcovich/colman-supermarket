@@ -1,0 +1,58 @@
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    box-sizing: border-box;
+    left: 0;
+}
+
+.header-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header-button img {
+    width: 40px;
+    height: 40px;
+}
+
+.search-bar {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.additional-filters {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.additional-filters input,
+.additional-filters select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.button-container {
+    text-align: right;
+}

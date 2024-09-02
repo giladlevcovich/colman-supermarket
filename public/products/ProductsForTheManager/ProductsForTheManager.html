@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product for admin</title>
-    <link rel="stylesheet" href="product-admin.css">
+    <link rel="stylesheet" href="ProductsForTheManager.css">
+    <link rel="stylesheet" href="../common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="product-admin.js"></script>
+    <script src="ProductsForTheManager.js"></script>
 </head>
 <body>
 <div class="container">
     <h1>Product Management</h1>
-
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search products by name...">
-        <button id="searchButton">Search</button>
-        <button id="clearButton">Clear</button> <!-- כפתור חדש -->
+        <input type="text" id="name" placeholder="Search by product name..." class="search-bar">        <button id="searchButton">
+            <img src="../../assets/SearchIcon.png" height="30" width="30"/>
+        </button>
+        <button id="clearButton">
+            <img src="../../assets/ClearIcon.png" height="30" width="30">
+        </button>
     </div>
 
     <div class="product-list-container">
-        <button id="addProductButton">Add New Product</button>
         <div id="productList" class="product-list"></div>
     </div>
 </div>
@@ -42,5 +44,8 @@
         <button id="saveProductButton">Save</button>
     </div>
 </div>
+
+<button class="createButton" id="addProductButton">+</button>
+
 </body>
 </html>
