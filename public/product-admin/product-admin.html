@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product for admin</title>
+    <link rel="stylesheet" href="product-admin.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="product-admin.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Product Management</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products by name...">
+        <button id="searchButton">Search</button>
+    </div>
+
+    <div class="product-list-container">
+        <button id="addProductButton">Add New Product</button>
+        <div id="productList" class="product-list"></div>
+    </div>
+</div>
+
+<!-- Modal for Adding/Editing Product -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Add/Edit Product</h2>
+        <input type="text" id="productName" placeholder="Product Name">
+        <input type="number" id="productPrice" placeholder="Price">
+        <select id="productSupplier">
+            <option value="">Select Supplier</option>
+            <!-- Supplier options will be dynamically added here -->
+        </select>
+        <input type="text" id="productImage" placeholder="Image URL">
+        <label>
+            <input type="checkbox" id="productKosher"> Kosher
+        </label>
+        <label>
+            <input type="checkbox" id="productGluten"> Contains Gluten
+        </label>
+        <button id="saveProductButton">Save</button>
+    </div>
+</div>
+</body>
+</html>
