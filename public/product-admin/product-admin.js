@@ -52,6 +52,11 @@ $(document).ready(function () {
         loadProducts(query);
     });
 
+    $('#clearButton').click(function () {
+        $('#searchInput').val('');
+        loadProducts();
+    });
+
     $('#addProductButton').click(function () {
         clearModal();
         $('#productModal').data('mode', 'add');
@@ -109,7 +114,7 @@ $(document).ready(function () {
         const product = {
             name: $('#productName').val(),
             price: $('#productPrice').val(),
-            supplier: $('#productSupplier').val(), // שליחה של ID של ספק
+            supplier: $('#productSupplier').val(),
             image: $('#productImage').val(),
             isKosher: $('#productKosher').is(':checked'),
             containsGluten: $('#productGluten').is(':checked')

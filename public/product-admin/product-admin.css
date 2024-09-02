@@ -154,3 +154,128 @@ h1 {
 #saveProductButton:hover {
     background-color: #0056b3;
 }
+/* סגנונות כלליים */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* סגנונות עבור מיכל החיפוש */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+}
+
+#searchButton, #clearButton {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+}
+
+#searchButton {
+    background-color: #007bff;
+}
+
+#clearButton {
+    background-color: #dc3545;
+}
+
+/* עיצוב של הכפתורים */
+#searchButton:hover {
+    background-color: #0056b3;
+}
+
+#clearButton:hover {
+    background-color: #c82333;
+}
+
+/* עיצוב של המודאל */
+.modal {
+    display: none; /* נסתר כברירת מחדל */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); /* צבע הרקע של המודאל */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* עיצוב של פרטי המוצר */
+.product-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-item img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.product-item button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.product-item .edit {
+    background-color: #007bff;
+}
+
+.product-item .delete {
+    background-color: #dc3545;
+}
+
+.product-item .edit:hover {
+    background-color: #0056b3;
+}
+
+.product-item .delete:hover {
+    background-color: #c82333;
+}

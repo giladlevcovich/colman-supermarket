@@ -15,6 +15,7 @@
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search products by name...">
         <button id="searchButton">Search</button>
+        <button id="clearButton">Clear</button> <!-- כפתור חדש -->
     </div>
 
     <div class="product-list-container">
@@ -30,10 +31,7 @@
         <h2 id="modalTitle">Add/Edit Product</h2>
         <input type="text" id="productName" placeholder="Product Name">
         <input type="number" id="productPrice" placeholder="Price">
-        <select id="productSupplier">
-            <option value="">Select Supplier</option>
-            <!-- Supplier options will be dynamically added here -->
-        </select>
+        <select id="productSupplier"></select> <!-- שדה ספק ישודרג לאופציות -->
         <input type="text" id="productImage" placeholder="Image URL">
         <label>
             <input type="checkbox" id="productKosher"> Kosher
