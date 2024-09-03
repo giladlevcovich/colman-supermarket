@@ -12,7 +12,6 @@ $(document).ready(function() {
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
 
-        // Make the POST request to your backend API
         $.ajax({
             url: 'https://your-backend-api.com/login', // Replace with Ofek & Kobi's API
             type: 'POST',

@@ -66,17 +66,14 @@ $(document).ready(function() {
     $('#searchButton').trigger('click');
 
     $(document).ready(function() {
-        // הצגת המודל כאשר לוחצים על הכפתור
         $("#showVideoButton").click(function() {
             $("#videoModal").fadeIn();
         });
 
-        // סגירת המודל כאשר לוחצים על כפתור הסגירה
         $(".close").click(function() {
             $("#videoModal").fadeOut();
         });
 
-        // סגירת המודל כאשר לוחצים מחוץ לתוכן המודל
         $(window).click(function(event) {
             if ($(event.target).is("#videoModal")) {
                 $("#videoModal").fadeOut();
