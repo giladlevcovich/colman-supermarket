@@ -84,4 +84,20 @@ $(document).ready(function() {
     });
 
     $('#searchButton').trigger('click');
+    $(document).ready(function() {
+        $("#showVideoButton").click(function() {
+            $("#videoModal").fadeIn();
+        });
+
+        $(".close").click(function() {
+            $("#videoModal").fadeOut();
+        });
+
+        $(window).click(function(event) {
+            if ($(event.target).is("#videoModal")) {
+                $("#videoModal").fadeOut();
+            }
+        });
+    });
+
 });
