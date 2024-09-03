@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="ordersHistory.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="orderHistory.js"></script>
+</head>
+<body>
+    <div class="header-buttons">
+        <div class="left-icon">
+            <a href="personal-area.html" class="header-button personal-area">
+                <img src="https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg" alt="Personal Area" />
+            </a>
+            <div class="video-container">
+                <button class="show-video-button" id="showVideoButton">
+                    <img src="../../assets/RamziFace.webp">
+                </button>
+            </div>
+        </div>
+        <a href="shopping-cart.html" class="header-button-shopping-cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" alt="Shopping Cart" />
+        </a>
+    </div>
+
+    <div class="container">
+        <h1>Order History</h1>
+
+        <div class="search-container">
+            <input type="date" id="startDate" placeholder="Start Date" class="search-bar">
+            <input type="date" id="endDate" placeholder="End Date" class="search-bar">
+            <button id="filterButton">
+                <img src="../../assets/SearchIcon.png" height="30" width="30"/>
+            </button>
+        </div>
+
+        <div class="order-list-container">
+            <div id="orderList" class="order-list"></div>
+        </div>
+
+        <div id="videoModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <video id="myVideo" controls>
+                    <source src="../../assets/MiniSuper.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
