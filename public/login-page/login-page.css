@@ -93,3 +93,21 @@ button:active {
     color: #dc3545;
     font-size: 14px;
 }
+
+/* Moving Image */
+.moving-image {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    z-index: 1;
+    animation: moveAround 20s linear infinite;
+}
+
+/* Keyframes for Animation */
+@keyframes moveAround {
+    0% { top: 0; left: 0; }
+    25% { top: 0; left: calc(100% - 120px); }
+    50% { top: calc(100% - 120px); left: calc(100% - 120px); }
+    75% { top: calc(100% - 120px); left: 0; }
+    100% { top: 0; left: 0; }
+}
