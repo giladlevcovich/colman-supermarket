@@ -35,7 +35,7 @@ $(document).ready(function () {
             method: 'GET',
             success: function (data) {
                 const supplierSelect = $('#productSupplier');
-                supplierSelect.empty(); // ניקוי אפשרויות קודמות
+                supplierSelect.empty();
                 supplierSelect.append('<option value="" disabled selected>Select a Supplier</option>');
                 data.forEach(supplier => {
                     supplierSelect.append(`<option value="${supplier._id}">${supplier.name}</option>`);
