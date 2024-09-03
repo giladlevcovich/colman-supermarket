@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product for admin</title>
+    <link rel="stylesheet" href="ProductsForTheManager.css">
+    <link rel="stylesheet" href="../common.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="ProductsForTheManager.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Product Management</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by product name..." class="search-bar">
+        <button id="searchButton">
+            <img src="../../assets/SearchIcon.png" height="30" width="30"/>
+        </button>
+        <button id="clearButton">
+            <img src="../../assets/ClearIcon.png" height="30" width="30">
+        </button>
+    </div>
+
+    <div class="product-list-container">
+        <div id="productList" class="product-list"></div>
+    </div>
+</div>
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Add/Edit Product</h2>
+        <input type="text" id="productName" placeholder="Product Name">
+        <input type="number" id="productPrice" placeholder="Price">
+        <select id="productSupplier" name="supplier">
+            <option value="" disabled selected>Select a Supplier</option>
+        </select>
+        <input type="text" id="productImage" placeholder="Image URL">
+        <label>
+            <input type="checkbox" id="productKosher"> Kosher
+        </label>
+        <label>
+            <input type="checkbox" id="productGluten"> Contains Gluten
+        </label>
+        <button id="saveProductButton">Save</button>
+    </div>
+</div>
+
+<button class="createButton" id="addProductButton">+</button>
+
+</body>
+</html>
