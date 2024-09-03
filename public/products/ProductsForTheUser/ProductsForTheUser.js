@@ -1,11 +1,31 @@
 $(document).ready(function() {
+    function loadSuppliers() {
+        $.ajax({
+            url: 'http://localhost:80/api/suppliers', // כתובת ה-API לטעינת הספקים
+            method: 'GET',
+            success: function(suppliers) {
+                const supplierSelect = $('#productSupplier');
+                suppliers.forEach(supplier => {
+                    supplierSelect.append(
+                        `<option value="${supplier._id}">${supplier.name}</option>`
+                    );
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching suppliers:', error);
+            }
+        });
+    }
+
+    loadSuppliers();
+
     $('#toggleFilters').click(function() {
         $('#additionalFilters').toggle();
     });
 
     function search() {
         const name = $('#name').val();
-        const supplier = $('#supplier').val();
+        const supplier = $('#productSupplier').val();
         const containsGluten = $('#containsGluten').val();
         const isKosher = $('#isKosher').val();
         const minPrice = $('#minPrice').val();
@@ -51,37 +71,17 @@ $(document).ready(function() {
         });
     }
 
-    $('#searchButton').click(search)
+    $('#searchButton').click(search);
 
     $('#clearButton').click(function() {
         $('#name').val('');
-        $('#supplier').val('');
+        $('#productSupplier').val('');
         $('#containsGluten').val('');
         $('#isKosher').val('');
         $('#minPrice').val('');
         $('#maxPrice').val('');
-        search()
+        search();
     });
 
     $('#searchButton').trigger('click');
-
-    $(document).ready(function() {
-        // הצגת המודל כאשר לוחצים על הכפתור
-        $("#showVideoButton").click(function() {
-            $("#videoModal").fadeIn();
-        });
-
-        // סגירת המודל כאשר לוחצים על כפתור הסגירה
-        $(".close").click(function() {
-            $("#videoModal").fadeOut();
-        });
-
-        // סגירת המודל כאשר לוחצים מחוץ לתוכן המודל
-        $(window).click(function(event) {
-            if ($(event.target).is("#videoModal")) {
-                $("#videoModal").fadeOut();
-            }
-        });
-    });
-
 });
