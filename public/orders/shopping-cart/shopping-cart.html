@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="shopping-cart.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="shopping-cart.js"></script>
+</head>
+<body>
+    <div class="header-buttons">
+        <div class="left-icon">
+            <a href="personal-area.html" class="header-button personal-area">
+                <img src="https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg" alt="Personal Area" />
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" alt="Cart Logo" class="cart-logo"/> Shopping Cart</h1>
+        <div id="cartItems" class="product-list">
+            <!-- Empty Cart Message -->
+            <p id="emptyCartMessage" style="display:none;">
+                <span class="sad-emoji">🥹</span> Your shopping cart is empty. Please add products to your cart.
+            </p>
+        </div>
+        <button id="buyNowButton" style="display:none;">Buy Now</button>
+    </div>
+</body>
+</html>
