@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const Product = require('../products/products.model');
-const User = require('../users/users.model');
+const Product = require('../../products/models/products.model');
+const User = require('../../users/models/users.model');
 
 const orderSchema = new Schema({
     _id: {
@@ -11,14 +11,14 @@ const orderSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
-        validate: {
-            validator: async function(value) {
-                const userExists = await User.exists({ _id: value });
-                return userExists;
-            },
-            message: 'The user ID does not exist in the database'
-        }
+        required: false,
+        // validate: {
+        //     validator: async function(value) {
+        //         const userExists = await User.exists({ _id: value });
+        //         return userExists;
+        //     },
+        //     message: 'The user ID does not exist in the database'
+        // }
     },
     products: [{
         type: Schema.Types.ObjectId,
