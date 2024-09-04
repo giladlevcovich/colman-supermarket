@@ -17,7 +17,7 @@ $(document).ready(function() {
                         name: product.name,
                         image: product.image,
                         price: product.price,
-                        supplierName: product.supplier.name // Adjust as needed
+                        supplierName: product.supplier.name 
                     });
                     localStorage.setItem(cartKey, JSON.stringify(cart));
                     loadCart(); // Refresh cart view
@@ -34,10 +34,11 @@ $(document).ready(function() {
     function loadCart() {
         const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         const $cartItems = $('#cartItems');
-        $cartItems.empty();
+        
+        $cartItems.empty(); // Clear previous items before appending new ones
 
         if (cart.length === 0) {
-            $cartItems.append('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
+            $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
         } else {
             cart.forEach((item, index) => {
@@ -53,7 +54,7 @@ $(document).ready(function() {
             });
             $('#buyNowButton').show();
         }
-    }
+    }    
 
     function saveOrder(cart) {
         function getCookie(name) {
@@ -76,8 +77,8 @@ $(document).ready(function() {
             data: JSON.stringify(order),
             success: function(response) {
                 alert('Order placed successfully!');
-                localStorage.removeItem(cartKey); // Clear cart
-                loadCart(); // Refresh cart view
+                localStorage.removeItem(cartKey); 
+                loadCart(); 
             },
             error: function(error) {
                 console.error('Error placing order:', error);
