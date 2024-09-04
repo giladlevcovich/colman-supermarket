@@ -47,6 +47,32 @@ $(document).ready(function () {
         });
     }
 
+    function fetchSuppliersCounts() {
+        $.ajax({
+            url: 'http://localhost:80/api/products/count-by-supplier', // Your API endpoint
+            method: 'GET',
+            success: function (response) {
+                $('#result').empty();
+                if (response.length > 0) {
+                    let table = '<table border="1"><thead><tr><th>Supplier</th><th>Product Count</th></tr></thead><tbody>';
+
+                    response.forEach(item => {
+                        table += `<tr><td>${item.supplierName}</td><td>${item.count}</td></tr>`;
+                    });
+
+                    table += '</tbody></table>';
+                    $('#result').html(table);
+                } else {
+                    $('#result').text('No data available.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data:', error);
+                $('#result').text('Failed to fetch data.');
+            }
+        });
+    }
+
     $('#searchButton').click(function () {
         const query = $('#searchInput').val();
         loadProducts(query);
@@ -138,6 +164,7 @@ $(document).ready(function () {
             }
         });
     }
+
 
     function clearModal() {
         $('#productName').val('');
