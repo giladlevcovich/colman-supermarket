@@ -26,8 +26,9 @@ $(document).ready(function() {
     }
 
     function saveOrder(cart) {
+        const userId = 'someUserId'; // Replace with the actual user ID from your authentication system.
         const order = {
-            user: 'someUserId', // Replace with actual user ID
+            user: userId,
             products: cart.map(item => item.id),
             totalPrice: cart.reduce((total, item) => total + item.price, 0),
             date: new Date()

@@ -33,6 +33,25 @@ exports.getOrderById = async (req, res) => {
     }
 };
 
+exports.getProductsByOrderId = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+
+        // Find the order by ID and populate the products
+        const order = await Order.findById(orderId).populate('products', 'name price');
+
+        // Check if the order exists
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Return the products of the order
+        res.status(200).json(order.products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.updateOrderById = async (req, res) => {
     try {
         const { id } = req.params;
