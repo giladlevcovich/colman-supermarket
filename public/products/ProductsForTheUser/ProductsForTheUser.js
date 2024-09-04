@@ -83,12 +83,12 @@ $(document).ready(function () {
     $(document).on('click', '.add-to-cart-button', function () {
         const productId = $(this).data('id'); // Get the product ID from the data attribute
 
-        if (productId && userId) {
+        if (productId) {
             $.ajax({
                 url: 'http://localhost:80/api/cart',
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({productId: productId, userId: userId}),
+                data: JSON.stringify({productId: productId}),
                 success: function (response) {
                     alert('Product added to cart successfully!');
                 },
