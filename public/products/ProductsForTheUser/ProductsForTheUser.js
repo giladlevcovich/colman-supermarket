@@ -72,20 +72,12 @@ $(document).ready(function () {
         });
     }
 
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-
-    const userId = getCookie('userId');
-
     $(document).on('click', '.add-to-cart-button', function () {
-        const productId = $(this).data('id'); // Get the product ID from the data attribute
+        const productId = $(this).data('id');
 
         if (productId) {
             $.ajax({
-                url: 'http://localhost:80/api/cart',
+                url: `http://localhost:80/api/cart/add-to-cart/${productId}`,
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({productId: productId}),
