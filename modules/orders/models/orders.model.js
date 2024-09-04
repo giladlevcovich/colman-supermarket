@@ -4,21 +4,17 @@ const Product = require('../../products/models/products.model');
 const User = require('../../users/models/users.model');
 
 const orderSchema = new Schema({
-    _id: {
-        type: Schema.Types.ObjectId,
-        auto: true,
-    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: false,
-        // validate: {
-        //     validator: async function(value) {
-        //         const userExists = await User.exists({ _id: value });
-        //         return userExists;
-        //     },
-        //     message: 'The user ID does not exist in the database'
-        // }
+        required: true,
+        validate: {
+            validator: async function(value) {
+                const userExists = await User.exists({ _id: value });
+                return userExists;
+            },
+            message: 'The user ID does not exist in the database'
+        }
     },
     products: [{
         type: Schema.Types.ObjectId,
@@ -34,7 +30,7 @@ const orderSchema = new Schema({
     }],
     totalPrice: {
         type: Number,
-        required: true,
+        required: false,
     },
     date: {
         type: Date,
