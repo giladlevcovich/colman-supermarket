@@ -1,71 +1,61 @@
 $(document).ready(function() {
-    const cartKey = 'shoppingCart';
+    // Initialize an array to store the product IDs in the cart
+    let cart = ['66d77e8467fccd6f0ee32391']; // Example product ID
 
-    function addToCart(productId) {
-        $.ajax({
-            url: `http://localhost:80/api/cart/add-to-cart`,
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ productId: productId }),
-            success: function(product) {
-                let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-                const existingProductIndex = cart.findIndex(item => item.id === product._id);
-
-                if (existingProductIndex === -1) {
-                    cart.push({
-                        id: product._id,
-                        name: product.name,
-                        image: product.image,
-                        price: product.price,
-                        supplierName: product.supplier.name 
-                    });
-                    localStorage.setItem(cartKey, JSON.stringify(cart));
-                    loadCart(); // Refresh cart view
-                } else {
-                    alert('Product is already in the cart.');
-                }
-            },
-            error: function(error) {
-                console.error('Error fetching product:', error);
-            }
-        });
-    }
-
+    // Function to fetch product details and render the cart items
     function loadCart() {
-        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         const $cartItems = $('#cartItems');
-        
         $cartItems.empty(); // Clear previous items before appending new ones
 
         if (cart.length === 0) {
             $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
         } else {
-            cart.forEach((item, index) => {
-                $cartItems.append(`
-                    <div class="product-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <p><strong>${item.name}</strong></p>
-                        <p>${item.supplierName}</p>
-                        <p>${item.price}₪</p>
-                        <button class="remove-button" data-index="${index}">X</button>
-                    </div>
-                `);
-            });
-            $('#buyNowButton').show();
+            // Fetch product details for each product ID
+            const fetchPromises = cart.map(productId =>
+                $.ajax({
+                    url: `http://localhost:80/api/products/${productId}`,
+                    method: 'GET',
+                    contentType: 'application/json'
+                })
+            );
+
+            // Wait for all product details to be fetched
+            Promise.all(fetchPromises)
+                .then(products => {
+                    products.forEach((product, index) => {
+                        $cartItems.append(`
+                            <div class="product-item">
+                                <img src="${product.image}" alt="${product.name}">
+                                <p><strong>${product.name}</strong></p>
+                                <p>${product.supplierName}</p>
+                                <p>${product.price}₪</p>
+                                <button class="remove-button" data-index="${index}">X</button>
+                            </div>
+                        `);
+                    });
+                    $('#buyNowButton').show();
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    $cartItems.html('<p id="emptyCartMessage">Error loading cart items.</p>');
+                    $('#buyNowButton').hide();
+                });
         }
     }    
 
+    // Function to save the order by sending the cart list to the server
     function saveOrder(cart) {
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-        const userId = getCookie('userId');
+        // function getCookie(name) {
+        //     const value = `; ${document.cookie}`;
+        //     const parts = value.split(`; ${name}=`);
+        //     if (parts.length === 2) return parts.pop().split(';').shift();
+        // }
+        //const userId = getCookie('userId');
+        const userId = '66d7590f82a6a9a4dfa61d46';
         const order = {
             user: userId,
-            products: cart.map(item => item.id),
+            products: cart,
             totalPrice: cart.reduce((total, item) => total + item.price, 0),
             date: new Date()
         };
@@ -77,8 +67,8 @@ $(document).ready(function() {
             data: JSON.stringify(order),
             success: function(response) {
                 alert('Order placed successfully!');
-                localStorage.removeItem(cartKey); 
-                loadCart(); 
+                cart = []; // Clear the cart array
+                loadCart(); // Refresh cart view
             },
             error: function(error) {
                 console.error('Error placing order:', error);
@@ -86,16 +76,15 @@ $(document).ready(function() {
         });
     }
 
+    // Event handler to remove a product from the cart
     $('#cartItems').on('click', '.remove-button', function() {
         const index = $(this).data('index');
-        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-        cart.splice(index, 1);
-        localStorage.setItem(cartKey, JSON.stringify(cart));
-        loadCart();
+        cart.splice(index, 1); // Remove the product from the cart array
+        loadCart(); // Refresh cart view
     });
 
+    // Event handler for the "Buy Now" button
     $('#buyNowButton').click(function() {
-        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         if (cart.length > 0) {
             saveOrder(cart);
         } else {
@@ -103,5 +92,9 @@ $(document).ready(function() {
         }
     });
 
+    // Initial load of the cart
     loadCart();
+
+    // This function needs to be called when a product is added to the cart
+    // window.addToCart = addToCart;
 });
