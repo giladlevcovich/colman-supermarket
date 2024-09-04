@@ -3,12 +3,14 @@ $(document).ready(function() {
 
     function addToCart(productId) {
         $.ajax({
-            url: `http://localhost:80/api/cart/add-to-cart/${productId}`,
-            method: 'GET',
+            url: `http://localhost:80/api/cart/add-to-cart`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ productId: productId }),
             success: function(product) {
                 let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
                 const existingProductIndex = cart.findIndex(item => item.id === product._id);
-    
+
                 if (existingProductIndex === -1) {
                     cart.push({
                         id: product._id,
@@ -33,7 +35,7 @@ $(document).ready(function() {
         const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         const $cartItems = $('#cartItems');
         $cartItems.empty();
-    
+
         if (cart.length === 0) {
             $cartItems.append('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
@@ -52,7 +54,7 @@ $(document).ready(function() {
             $('#buyNowButton').show();
         }
     }
-    
+
     function saveOrder(cart) {
         function getCookie(name) {
             const value = `; ${document.cookie}`;
@@ -66,7 +68,7 @@ $(document).ready(function() {
             totalPrice: cart.reduce((total, item) => total + item.price, 0),
             date: new Date()
         };
-    
+
         $.ajax({
             url: 'http://localhost:80/api/orders',
             method: 'POST',
@@ -80,7 +82,7 @@ $(document).ready(function() {
             error: function(error) {
                 console.error('Error placing order:', error);
             }
-        });    
+        });
     }
 
     $('#cartItems').on('click', '.remove-button', function() {
