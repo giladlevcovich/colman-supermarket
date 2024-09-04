@@ -72,22 +72,34 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.add-to-cart-button', function () {
-        const productId = $(this).data('id');
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
-        $.ajax({
-            url: 'http://localhost:80/api/cart', // Replace with your backend endpoint
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({productId: productId}),
-            success: function (response) {
-                alert('Product added to cart successfully!');
-            },
-            error: function (error) {
-                console.error('Error adding product to cart:', error);
-                alert('Failed to add product to cart.');
-            }
-        });
+    const userId = getCookie('userId');
+
+    $(document).on('click', '.add-to-cart-button', function () {
+        const productId = $(this).data('id'); // Get the product ID from the data attribute
+
+        if (productId && userId) {
+            $.ajax({
+                url: 'http://localhost:80/api/cart',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({productId: productId, userId: userId}),
+                success: function (response) {
+                    alert('Product added to cart successfully!');
+                },
+                error: function (error) {
+                    console.error('Error adding product to cart:', error);
+                    alert('Failed to add product to cart.');
+                }
+            });
+        } else {
+            alert('Unable to add product to cart. User ID or Product ID is missing.');
+        }
     });
 
 
