@@ -88,8 +88,9 @@ $(document).ready(function () {
                     alert('Failed to add product to cart.');
                 }
             });
+
         } else {
-            alert('Unable to add product to cart. User ID or Product ID is missing.');
+            alert('Unable to add product to cart.Product ID is missing.');
         }
     });
 
