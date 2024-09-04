@@ -54,7 +54,12 @@ $(document).ready(function() {
     }
     
     function saveOrder(cart) {
-        const userId = 'someUserId'; // Replace with the actual user ID from your authentication system.
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        const userId = getCookie('userId');
         const order = {
             user: userId,
             products: cart.map(item => item.id),
