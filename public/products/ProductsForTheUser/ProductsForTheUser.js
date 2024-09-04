@@ -74,17 +74,16 @@ $(document).ready(function () {
 
     $(document).on('click', '.add-to-cart-button', function () {
         const productId = $(this).data('id');
-
         if (productId) {
             $.ajax({
-                url: `http://localhost:80/api/cart/add-to-cart/${productId}`,
+                url: `http://localhost:80/api/cart/add-to-cart`,
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({productId: productId}),
                 success: function (response) {
                     alert('Product added to cart successfully!');
                 },
-                error: function (error) {
+                error: function (xhr, status, error) {
                     console.error('Error adding product to cart:', error);
                     alert('Failed to add product to cart.');
                 }
