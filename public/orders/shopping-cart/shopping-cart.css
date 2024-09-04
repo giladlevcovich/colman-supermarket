@@ -44,16 +44,17 @@ body {
     background-color: #fff;
     margin-bottom: 10px;
     border-radius: 5px;
+    gap: 15px; /* Adds space between the image and the product details */
 }
 
 .product-item img {
     height: 80px;
     width: 80px;
     object-fit: cover;
-    margin-right: 15px;
+    border-radius: 5px;
 }
 
-.product-item div {
+.product-details {
     flex: 1;
 }
 
@@ -62,7 +63,7 @@ body {
 }
 
 .remove-button {
-    background-color: #ff4d4d;
+    background-color: #343333;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -71,11 +72,11 @@ body {
 }
 
 .remove-button:hover {
-    background-color: #ff1a1a;
+    background-color: #2f2d2d;
 }
 
 #buyNowButton {
-    background-color: #4CAF50;
+    background-color: #4c78af;
     color: white;
     padding: 10px 20px;
     border: none;
