@@ -27,9 +27,10 @@ $(document).ready(function() {
                         $cartItems.append(`
                             <div class="product-item">
                                 <img src="${product.image}" alt="${product.name}">
-                                <p><strong>${product.name}</strong></p>
-                                <p>${product.supplierName}</p>
-                                <p>${product.price}₪</p>
+                                <div class="product-details">
+                                    <p><strong>${product.name}</strong></p>
+                                    <p>Price: ${product.price}₪</p>
+                                </div>
                                 <button class="remove-button" data-index="${index}">X</button>
                             </div>
                         `);
@@ -46,13 +47,7 @@ $(document).ready(function() {
 
     // Function to save the order by sending the cart list to the server
     function saveOrder(cart) {
-        // function getCookie(name) {
-        //     const value = `; ${document.cookie}`;
-        //     const parts = value.split(`; ${name}=`);
-        //     if (parts.length === 2) return parts.pop().split(';').shift();
-        // }
-        //const userId = getCookie('userId');
-        const userId = '66d7590f82a6a9a4dfa61d46';
+        const userId = '66d7590f82a6a9a4dfa61d46'; // Example user ID
         const order = {
             user: userId,
             products: cart,
@@ -94,7 +89,4 @@ $(document).ready(function() {
 
     // Initial load of the cart
     loadCart();
-
-    // This function needs to be called when a product is added to the cart
-    // window.addToCart = addToCart;
 });
