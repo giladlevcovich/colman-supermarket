@@ -1,9 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function () {
     function loadSuppliers() {
         $.ajax({
-            url: 'http://localhost:80/api/suppliers', // כתובת ה-API לטעינת הספקים
+            url: 'http://localhost:80/api/suppliers', // API address to load suppliers
             method: 'GET',
-            success: function(suppliers) {
+            success: function (suppliers) {
                 const supplierSelect = $('#productSupplier');
                 suppliers.forEach(supplier => {
                     supplierSelect.append(
@@ -11,7 +11,7 @@ $(document).ready(function() {
                     );
                 });
             },
-            error: function(error) {
+            error: function (error) {
                 console.error('Error fetching suppliers:', error);
             }
         });
@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     loadSuppliers();
 
-    $('#toggleFilters').click(function() {
+    $('#toggleFilters').click(function () {
         $('#additionalFilters').toggle();
     });
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
         $.ajax({
             url: `http://localhost:80/api/products${queryString}`,
             method: 'GET',
-            success: function(data) {
+            success: function (data) {
                 $('#productList').empty();
                 if (data.length > 0) {
                     data.forEach(product => {
@@ -57,6 +57,7 @@ $(document).ready(function() {
                                 <p><strong>Is Kosher:</strong> ${product.isKosher ? 'Yes' : 'No'}</p>
                                 <p><strong>Contains Gluten:</strong> ${product.containsGluten ? 'Yes' : 'No'}</p>
                                 <img src="${product.image}" alt="${product.name}">
+                                <button class="add-to-cart-button" data-id="${product._id}">Add to cart</button>
                             </div>
                         `);
                     });
@@ -64,16 +65,47 @@ $(document).ready(function() {
                     $('#productList').append('<p>No products found.</p>');
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.error('Error fetching products:', error);
                 $('#productList').empty().append('<p>Error loading products.</p>');
             }
         });
     }
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const userId = getCookie('userId');
+
+    $(document).on('click', '.add-to-cart-button', function () {
+        const productId = $(this).data('id'); // Get the product ID from the data attribute
+
+        if (productId && userId) {
+            $.ajax({
+                url: 'http://localhost:80/api/cart',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({productId: productId, userId: userId}),
+                success: function (response) {
+                    alert('Product added to cart successfully!');
+                },
+                error: function (error) {
+                    console.error('Error adding product to cart:', error);
+                    alert('Failed to add product to cart.');
+                }
+            });
+        } else {
+            alert('Unable to add product to cart. User ID or Product ID is missing.');
+        }
+    });
+
+
     $('#searchButton').click(search);
 
-    $('#clearButton').click(function() {
+    $('#clearButton').click(function () {
         $('#name').val('');
         $('#productSupplier').val('');
         $('#containsGluten').val('');
@@ -84,16 +116,16 @@ $(document).ready(function() {
     });
 
     $('#searchButton').trigger('click');
-    $(document).ready(function() {
-        $("#showVideoButton").click(function() {
+    $(document).ready(function () {
+        $("#showVideoButton").click(function () {
             $("#videoModal").fadeIn();
         });
 
-        $(".close").click(function() {
+        $(".close").click(function () {
             $("#videoModal").fadeOut();
         });
 
-        $(window).click(function(event) {
+        $(window).click(function (event) {
             if ($(event.target).is("#videoModal")) {
                 $("#videoModal").fadeOut();
             }
