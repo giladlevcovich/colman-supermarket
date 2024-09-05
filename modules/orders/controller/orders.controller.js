@@ -87,24 +87,41 @@ exports.deleteOrderById = async (req, res) => {
 
 exports.getOrdersByUserId = async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        const { userId } = req.params;
+        const { startDate, endDate } = req.query;
+
+        // Validate userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid User ID format' });
         }
 
-        const user = await User.findById(req.params.userId);
+        // Validate startDate and endDate, if provided
+        let dateFilter = {};
+        if (startDate || endDate) {
+            dateFilter.date = {};
+            if (startDate) {
+                dateFilter.date.$gte = new Date(startDate); // Start of the range
+            }
+            if (endDate) {
+                dateFilter.date.$lte = new Date(endDate); // End of the range
+            }
+        }
 
+        // Find the user
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         let orders;
 
+        // If the user is an admin, fetch all orders; otherwise, fetch only the user's orders
         if (user.isAdmin) {
-            orders = await Order.find({})
+            orders = await Order.find(dateFilter)
                 .populate('user', 'name')
                 .populate('products', 'name price');
         } else {
-            orders = await Order.find({ user: req.params.userId })
+            orders = await Order.find({ user: userId, ...dateFilter })
                 .populate('user', 'name')
                 .populate('products', 'name price');
         }

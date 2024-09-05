@@ -27,15 +27,17 @@
 
     <div class="container">
         <h1>Order History</h1>
-
         <div class="search-container">
-            <input type="date" id="startDate" placeholder="Start Date" class="search-bar">
-            <input type="date" id="endDate" placeholder="End Date" class="search-bar">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" class="search-bar">
+            
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" class="search-bar">
+            
             <button id="filterButton">
                 <img src="../../assets/SearchIcon.png" height="30" width="30"/>
             </button>
-        </div>
-
+        </div>        
         <div class="order-list-container">
             <div id="orderList" class="order-list"></div>
         </div>
