@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Area</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="personal-area-page.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-circle"></i> Your Personal Area</h1>
+        </header>
+        <main>
+            <section id="greeting" class="card">
+                <h2>Welcome back, <span id="username-display"></span>!</h2>
+                <p>We're glad to see you here. This is your personal space where you can manage your profile and settings.</p>
+                <button id="editProfileBtn" class="btn btn-primary"><i class="fas fa-edit"></i> Edit Profile</button>
+            </section>
+            <section id="profileForm" class="card hidden">
+                <h2><i class="fas fa-user-edit"></i> Edit Your Profile</h2>
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address"><i class="fas fa-home"></i> Address:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> New Password (leave blank to keep current):</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group button-group">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
+                        <button type="button" id="cancelBtn" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+        <div id="message" class="hidden"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="personal-area-page.js"></script>
+</body>
+</html>
