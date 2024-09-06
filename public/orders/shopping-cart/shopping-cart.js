@@ -46,10 +46,14 @@ $(document).ready(function() {
                     $cartItems.append(`
                         <div class="cart-total">
                             <p><strong>Total Price: ${totalPrice}₪</strong></p>
+                            <p id="usdTotal"></p>
                         </div>
                     `);
     
                     $('#buyNowButton').show(); // Show the Buy Now button
+
+                    // Fetch and display USD equivalent
+                    fetchUSDEquivalent(totalPrice);
                 })
                 .catch(error => {
                     console.error('Error fetching products:', error);
@@ -59,6 +63,30 @@ $(document).ready(function() {
         }
     }
     
+    // Function to fetch USD equivalent
+    function fetchUSDEquivalent(ilsAmount) {
+        const apiKey = '124d94306a5cf25f0c7da8a0';
+        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/ILS`;
+
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(response) {
+                if (response.result === 'success') {
+                    const usdRate = response.conversion_rates.USD;
+                    const usdAmount = (ilsAmount * usdRate).toFixed(2);
+                    $('#usdTotal').text(`Total Price in USD: $${usdAmount}`);
+                } else {
+                    console.error('Error fetching exchange rate:', response.error-type);
+                    $('#usdTotal').text('USD conversion unavailable');
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching exchange rate:', error);
+                $('#usdTotal').text('USD conversion unavailable');
+            }
+        });
+    }
 
     // Function to save the order by sending the cart list to the server
     function saveOrder(cart) {
