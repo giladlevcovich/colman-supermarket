@@ -160,3 +160,25 @@ exports.getTotalPriceByUserId = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+//Get orders count on a specific date
+exports.getOrdersCountByDate = async (req, res) => {
+    try {
+        const { date } = req.params;
+        
+        // Convert the input to the date format
+        const [day, month, year] = date.split('-');
+        const startDate = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
+        const endDate = new Date(`${year}-${month}-${day}T23:59:59.999Z`);
+
+        // Find the orders that has been placed on this date
+        const ordersCount = await Order.countDocuments({
+            date: { $gte: startDate, $lte: endDate }
+        });
+
+        res.status(200).json({ date, ordersCount });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
