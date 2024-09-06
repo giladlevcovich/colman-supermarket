@@ -21,7 +21,7 @@ $(document).ready(function () {
                 if (xhr.status === 200) {
                     if (response.isAdmin) {
                         setCookie('userId', response.id, 3);
-                        window.location.href = 'http://localhost/products/ProductsForTheManager/ProductsForTheManager.html';
+                        window.location.href = 'http://localhost/admin-page/admin-page.html';
                     } else {
                         setCookie('userId', response.id, 3);
                         window.location.href = 'http://localhost/products/ProductsForTheUser/ProductsForTheUser.html';
