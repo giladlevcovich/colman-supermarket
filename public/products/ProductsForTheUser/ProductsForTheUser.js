@@ -72,31 +72,26 @@ $(document).ready(function () {
         });
     }
 
+    let cart = [];
+
+    function addToCart(productId) {
+        if (!cart.includes(productId)) {
+            cart.push(productId);
+            localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage
+        }
+        console.log('Current cart:', cart); // Debugging: Display the current cart
+        alert('Product added to cart!');
+    }
+
+// Event listener for "Add to Cart" button click
     $(document).on('click', '.add-to-cart-button', function () {
         const productId = $(this).data('id');
-        console.log('Button clicked, productId:', productId); // Debugging statement
-    
         if (productId) {
-            $.ajax({
-                url: `http://localhost:80/api/cart/add-to-cart`,
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ productId: productId }),
-                success: function (response) {
-                    console.log('Response from server:', response); // Debugging statement
-                    alert('Product added to cart successfully!');
-                    // Optionally, update the cart display
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error adding product to cart:', error);
-                    alert('Failed to add product to cart.');
-                }
-            });
-    
+            addToCart(productId);
         } else {
-            alert('Unable to add product to cart. Product ID is missing.');
+            alert('Product ID is missing.');
         }
-    });    
+    });
 
     $('#searchButton').click(search);
 
