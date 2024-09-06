@@ -8,6 +8,9 @@
 </head>
 <body>
     <header>
+        <div id="order-count-bar" class="order-count-bar">
+            Order Count Today: <span id="order-count">Loading...</span>
+        </div>
         <h1>Hello Admin! What do you want to manage today?</h1>
     </header>
     <div class="buttons">
@@ -15,6 +18,11 @@
         <button onclick="navigateTo('../orders/ordersHistory/ordersHistory.html')">Orders</button>
         <button onclick="navigateTo('suppliers.html')">Suppliers</button>
     </div>
+
+    <!-- Include jQuery from a CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Your admin-page.js script -->
     <script src="admin-page.js"></script>
 </body>
 </html>

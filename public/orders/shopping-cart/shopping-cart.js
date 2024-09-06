@@ -1,12 +1,12 @@
 $(document).ready(function() {
     // Initialize an array to store the product IDs in the cart
-    let cart = ['66d77e8467fccd6f0ee32391']; // Example product ID
+    let cart = ['66d77e8467fccd6f0ee32391', '66d46fbc0e20da17dbd737cb']; // Example product ID
 
     // Function to fetch product details and render the cart items
     function loadCart() {
         const $cartItems = $('#cartItems');
         $cartItems.empty(); // Clear previous items before appending new ones
-
+    
         if (cart.length === 0) {
             $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
@@ -19,11 +19,17 @@ $(document).ready(function() {
                     contentType: 'application/json'
                 })
             );
-
+    
             // Wait for all product details to be fetched
             Promise.all(fetchPromises)
                 .then(products => {
+                    let totalPrice = 0; // Initialize total price
+    
                     products.forEach((product, index) => {
+                        // Add product's price to total price
+                        totalPrice += product.price;
+    
+                        // Append product details to cart
                         $cartItems.append(`
                             <div class="product-item">
                                 <img src="${product.image}" alt="${product.name}">
@@ -35,7 +41,15 @@ $(document).ready(function() {
                             </div>
                         `);
                     });
-                    $('#buyNowButton').show();
+    
+                    // Append total price before the Buy Now button
+                    $cartItems.append(`
+                        <div class="cart-total">
+                            <p><strong>Total Price: ${totalPrice}₪</strong></p>
+                        </div>
+                    `);
+    
+                    $('#buyNowButton').show(); // Show the Buy Now button
                 })
                 .catch(error => {
                     console.error('Error fetching products:', error);
@@ -43,7 +57,8 @@ $(document).ready(function() {
                     $('#buyNowButton').hide();
                 });
         }
-    }    
+    }
+    
 
     // Function to save the order by sending the cart list to the server
     function saveOrder(cart) {

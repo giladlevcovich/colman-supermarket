@@ -3,8 +3,14 @@ $(document).ready(function() {
 
     function fetchOrders(startDate = '', endDate = '') {
         const queryParams = [];
-        if (startDate) queryParams.push(`startDate=${encodeURIComponent(startDate)}`);
-        if (endDate) queryParams.push(`endDate=${encodeURIComponent(endDate)}`);
+        if (startDate) {
+            startDate = `${startDate}T00:00:00.000Z`; // Start of the day
+            queryParams.push(`startDate=${encodeURIComponent(startDate)}`);
+        }
+        if (endDate) {
+            endDate = `${endDate}T23:59:59.999Z`; // End of the day
+            queryParams.push(`endDate=${encodeURIComponent(endDate)}`);
+        }
         const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
     
         $.ajax({
@@ -14,6 +20,9 @@ $(document).ready(function() {
                 $('#orderList').empty();
                 console.log('Fetched data:', data); // Debugging line
                 if (Array.isArray(data) && data.length > 0) {
+                    // Sort the orders by date in descending order
+                    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
                     data.forEach(order => {
                         $('#orderList').append(`
                             <div class="order-item">
@@ -22,7 +31,7 @@ $(document).ready(function() {
                                 <button class="view-products-button" data-order-id="${order._id}">View Products</button>
                                 <div class="product-list" id="productList-${order._id}" style="display: none;"></div>
                             </div>
-                        `)
+                        `);
                     });
                 } else {
                     $('#orderList').append('<p>No orders found for the selected dates.</p>');
@@ -58,7 +67,7 @@ $(document).ready(function() {
                 $(`#productList-${orderId}`).append('<p>Error loading products.</p>');
             }
         });
-    }    
+    }
 
     $('#filterButton').click(function() {
         const startDate = $('#startDate').val();
@@ -68,7 +77,7 @@ $(document).ready(function() {
         console.log('Start Date:', startDate, 'End Date:', endDate);
     
         fetchOrders(startDate, endDate);
-    });    
+    });
 
     $('#orderList').on('click', '.view-products-button', function() {
         const orderId = $(this).data('order-id');
@@ -79,7 +88,6 @@ $(document).ready(function() {
             fetchProducts(orderId);
         }
     });
-    
 
     fetchOrders();  // Initial load without any filters
 });

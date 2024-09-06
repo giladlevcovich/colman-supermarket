@@ -10,5 +10,6 @@ router.put('/orders/:id', orderController.updateOrderById);
 router.delete('/orders/:id', orderController.deleteOrderById);
 router.get('/orders/total-price/:userId', orderController.getTotalPriceByUserId);
 router.get('/orders/:orderId/products', orderController.getProductsByOrderId);
+router.get('/orders/count/:date', orderController.getOrdersCountByDate);
 
 module.exports = router;

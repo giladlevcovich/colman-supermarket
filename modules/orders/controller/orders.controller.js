@@ -87,24 +87,41 @@ exports.deleteOrderById = async (req, res) => {
 
 exports.getOrdersByUserId = async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        const { userId } = req.params;
+        const { startDate, endDate } = req.query;
+
+        // Validate userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid User ID format' });
         }
 
-        const user = await User.findById(req.params.userId);
+        // Validate startDate and endDate, if provided
+        let dateFilter = {};
+        if (startDate || endDate) {
+            dateFilter.date = {};
+            if (startDate) {
+                dateFilter.date.$gte = new Date(startDate); // Start of the range
+            }
+            if (endDate) {
+                dateFilter.date.$lte = new Date(endDate); // End of the range
+            }
+        }
 
+        // Find the user
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         let orders;
 
+        // If the user is an admin, fetch all orders; otherwise, fetch only the user's orders
         if (user.isAdmin) {
-            orders = await Order.find({})
+            orders = await Order.find(dateFilter)
                 .populate('user', 'name')
                 .populate('products', 'name price');
         } else {
-            orders = await Order.find({ user: req.params.userId })
+            orders = await Order.find({ user: userId, ...dateFilter })
                 .populate('user', 'name')
                 .populate('products', 'name price');
         }
@@ -143,3 +160,25 @@ exports.getTotalPriceByUserId = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+//Get orders count on a specific date
+exports.getOrdersCountByDate = async (req, res) => {
+    try {
+        const { date } = req.params;
+        
+        // Convert the input to the date format
+        const [day, month, year] = date.split('-');
+        const startDate = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
+        const endDate = new Date(`${year}-${month}-${day}T23:59:59.999Z`);
+
+        // Find the orders that has been placed on this date
+        const ordersCount = await Order.countDocuments({
+            date: { $gte: startDate, $lte: endDate }
+        });
+
+        res.status(200).json({ date, ordersCount });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
