@@ -1,30 +1,38 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to fetch order count for today
-    async function fetchOrderCount() {
-        try {
-            // Get today's date
-            const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+// Function to fetch the order count for today
+function getOrderCountForToday() {
+    // Get today's date in DD-MM-YYYY format
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const year = today.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    //const formattedDate = '06-09-2024';
 
-            // Fetch the order count for today
-            const response = await fetch(`/api/orders/countByDate?date=${today}`);
-
-            const data = await response.json();
-
-            // Check if the data is an array and has a count
-            if (Array.isArray(data) && data.length > 0) {
-                const count = data[0].count || 0;
-                document.getElementById('order-count').innerText = count;
-            } else {
-                document.getElementById('order-count').innerText = '0';
-            }
-        } catch (error) {
+    // Send an AJAX GET request to the backend endpoint with today's date
+    $.ajax({
+        url: `http://localhost:80/api/orders/count/${formattedDate}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // Display the count
+            const orderCountElement = document.getElementById('order-count');
+            console.log(data.ordersCount);
+            orderCountElement.textContent = data.ordersCount;
+        },
+        error: function(xhr, status, error) {
             console.error('Error fetching order count:', error);
-            document.getElementById('order-count').innerText = 'Error';
+            // Display error message
+            const orderCountElement = document.getElementById('order-count');
+            orderCountElement.textContent = `Error: ${xhr.responseJSON?.message || 'Failed to fetch order count'}`;
         }
-    }
+    });
+}
 
-    fetchOrderCount();
+// Call the function on page load or whenever needed
+$(document).ready(function() {
+    getOrderCountForToday();
 });
+
 
 function navigateTo(page) {
     window.location.href = page;
