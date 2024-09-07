@@ -56,13 +56,13 @@ class UserController {
         }
     }
 
-     async authenticateUser(req, res) {
+    async authenticateUser(req, res) {
         const { username, password } = req.body;
 
         try {
             const user = await UserModel.findOne({ username });
             if (user && user.password === password) {
-                return res.status(200).json({ isAdmin: user.isAdmin });
+                return res.status(200).json({ isAdmin: user.isAdmin, id: user._id });
             } else {
                 return res.status(401).json({ message: 'Invalid username or password' });
             }
