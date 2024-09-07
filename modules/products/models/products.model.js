@@ -1,15 +1,23 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const Supplier = require('../../suppliers/suppliers.model');
 const productSchema = new Schema({
     _id: {
         type: Schema.Types.ObjectId,
         auto: true,
     },
-    provider: {
+    supplier: {
         type: Schema.Types.ObjectId,
-        ref: 'Provider',
+        ref: 'Supplier',
         required: true,
+        validate: {
+            validator: async function(value) {
+                const supplierExists = await Supplier.exists({ _id: value });
+                return supplierExists;
+            },
+            message: 'The supplier ID does not exist in the database'
+        }
     },
     name: {
         type: String,
@@ -38,5 +46,5 @@ const productSchema = new Schema({
 });
 
 
-const Product = mongoose.model('Product', productSchema);
-module.exports = Product;
+const ProductsModel = mongoose.model('Product', productSchema);
+module.exports = ProductsModel;
