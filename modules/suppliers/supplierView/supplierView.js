@@ -59,7 +59,7 @@ $(document).ready(function() {
       if (editingSupplierId) {
           // Update supplier
           $.ajax({
-              url: `${apiUrl}/suppliers/${editingSupplierId}`,
+              url: `${apiUrl}/updateSupplier/${editingSupplierId}`,
               method: 'PUT',
               data: JSON.stringify(supplierData),
               contentType: 'application/json',
@@ -75,7 +75,7 @@ $(document).ready(function() {
       } else {
           // Create new supplier
           $.ajax({
-              url: apiUrl, // TODO: inplement the add supplier route
+              url: apiUrl, // TODO: implement the add supplier route
               method: 'POST',
               data: JSON.stringify(supplierData),
               contentType: 'application/json',
