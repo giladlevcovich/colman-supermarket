@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personal Area</title>
+    <link rel="stylesheet" href="personal-area-page.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Your Personal Area</h1>
+        </header>
+        
+        <main role="main">
+            <section id="greeting" class="section card">
+                <h2>Welcome back, <span id="username-display"></span>!</h2>
+                <p>We're glad to see you here. This is your personal space where you can manage your profile and settings.</p>
+                <button id="editProfileBtn" class="btn btn-primary">Edit Profile</button>
+                <button id="userDataBtn" class="btn btn-secondary">User Data</button>
+            </section>
+
+            <section id="profileForm" class="section card hidden">
+                <h2>Edit Your Profile</h2>
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">New Password (leave blank to keep current):</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group button-group">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="button" id="cancelBtn" class="btn btn-danger">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="userDataSection" class="section card hidden">
+                    <h2>Your Order Data</h2>
+                    <div class="chart-container">
+                        <canvas id="orderCountChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailySpendingChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="mostPurchasedProductsChart"></canvas>
+                    </div>
+                    <button id="returnToProfileBtn" class="btn btn-primary">Return to Profile</button>
+            </section>
+        </main>
+
+        <div id="message" class="hidden"></div>
+    </div>
+    <script src="personal-area-page.js"></script>
+    <script src="user-data-graphs.js"></script>
+</body>
+</html>
