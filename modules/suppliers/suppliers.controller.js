@@ -34,16 +34,20 @@ exports.getSupplierById = async (req, res) => {
     }
 };
 
-
-exports.updateSupplierById = async (req, res) => {
-    try {
-        //TODO: Complete
-        res.status(200).json(supplier);
+exports.updateSupplierId = async (req, res) => {
+    try{
+        const supplierId = req.params.supplierId;
+        const updateData = req.body;
+        // Update the supplier with the given ID
+        const updatedSupplier = await Supplier.findByIdAndUpdate(supplierId, updateData, { new: true });
+        if (!updatedSupplier) {
+            return res.status(404).json({ message: `Supplier ${supplierId} not found` });
+        }
+        res.status(200).json({ message: `Supplier ${supplierId} updated successfully` });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
-
 
 exports.deleteSupplierById = async (req, res) => {
     try {
