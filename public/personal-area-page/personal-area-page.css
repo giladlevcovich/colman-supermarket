@@ -194,3 +194,22 @@ input[type="password"]:focus {
         margin-bottom: 10px;
     }
 }
+
+.btn-secondary {
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3;
+}
+
+.chart-container {
+    margin-top: 20px;
+    height: 300px;
+}
+
+#returnToProfileBtn {
+    width: 250px;
+    margin-top: 20px;
+}
