@@ -91,7 +91,7 @@ $(document).ready(function() {
   $(document).on('click', '.edit-supplier', function() {
       const supplierId = $(this).data('id');
       $.ajax({
-          url: `${apiUrl}/suppliers/${supplierId}`,
+          url: `${apiUrl}/supplier/${supplierId}`,
           method: 'GET',
           success: function(supplier) {
               editingSupplierId = supplier._id;
