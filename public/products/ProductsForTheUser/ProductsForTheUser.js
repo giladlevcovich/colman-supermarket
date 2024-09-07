@@ -75,10 +75,20 @@ $(document).ready(function () {
     let cart = [];
 
     function addToCart(productId) {
-        if (!cart.includes(productId)) {
-            cart.push(productId);
-            localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage
+        // Check if the product already exists in the cart
+        const existingProduct = cart.find(item => item.productId === productId);
+
+        if (existingProduct) {
+            // If the product exists, increase its quantity
+            existingProduct.quantity += 1;
+        } else {
+            // If the product doesn't exist, add it to the cart with a quantity of 1
+            cart.push({ productId: productId, quantity: 1 });
         }
+
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
         console.log('Current cart:', cart); // Debugging: Display the current cart
         alert('Product added to cart!');
     }

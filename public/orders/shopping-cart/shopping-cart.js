@@ -3,7 +3,7 @@ $(document).ready(function () {
     // let cart = ['66d77e8467fccd6f0ee32391', '66d46fbc0e20da17dbd737cb']; // Example product ID
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Function to fetch product details and render the cart items
+// Function to fetch product details and render the cart items
     function loadCart() {
         const $cartItems = $('#cartItems');
         $cartItems.empty(); // Clear previous items before appending new ones
@@ -12,12 +12,17 @@ $(document).ready(function () {
             $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
         } else {
-            // Fetch product details for each product ID
-            const fetchPromises = cart.map(productId =>
+            // Fetch product details for each product in the cart
+            const fetchPromises = cart.map(cartItem =>
                 $.ajax({
-                    url: `http://localhost:80/api/products/${productId}`,
+                    url: `http://localhost:80/api/products/${cartItem.productId}`,
                     method: 'GET',
                     contentType: 'application/json'
+                }).then(product => {
+                    return {
+                        ...product,
+                        quantity: cartItem.quantity // Include quantity from cart
+                    };
                 })
             );
 
@@ -27,29 +32,31 @@ $(document).ready(function () {
                     let totalPrice = 0; // Initialize total price
 
                     products.forEach((product, index) => {
-                        // Add product's price to total price
-                        totalPrice += product.price;
+                        const itemTotalPrice = product.price * product.quantity;
+                        totalPrice += itemTotalPrice; // Add item's total price to total price
 
                         // Append product details to cart
                         $cartItems.append(`
-                            <div class="product-item">
-                                <img src="${product.image}" alt="${product.name}">
-                                <div class="product-details">
-                                    <p><strong>${product.name}</strong></p>
-                                    <p>Price: ${product.price}₪</p>
-                                </div>
-                                <button class="remove-button" data-index="${index}">X</button>
+                        <div class="product-item">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="product-details">
+                                <p><strong>${product.name}</strong></p>
+                                <p>Price: ${product.price}₪</p>
+                                <p>Quantity: ${product.quantity}</p>
+                                <p>Total: ${itemTotalPrice}₪</p>
                             </div>
-                        `);
+                            <button class="remove-button" data-index="${index}">X</button>
+                        </div>
+                    `);
                     });
 
                     // Append total price before the Buy Now button
                     $cartItems.append(`
-                        <div class="cart-total">
-                            <p><strong>Total Price: ${totalPrice}₪</strong></p>
-                            <p id="usdTotal"></p>
-                        </div>
-                    `);
+                    <div class="cart-total">
+                        <p><strong>Total Price: ${totalPrice}₪</strong></p>
+                        <p id="usdTotal"></p>
+                    </div>
+                `);
 
                     $('#buyNowButton').show(); // Show the Buy Now button
 
