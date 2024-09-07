@@ -37,3 +37,7 @@ function initMap(suppliers) {
             );
     });
 }
+
+function navigateTo(page) {
+  window.location.href = page;
+}
