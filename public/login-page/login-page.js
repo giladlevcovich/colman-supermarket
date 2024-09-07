@@ -9,7 +9,7 @@ $(document).ready(function () {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
             const expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            document.cookie = `${name}=${value};${expires};path=/`;
         }
 
         $.ajax({
@@ -19,6 +19,8 @@ $(document).ready(function () {
             data: JSON.stringify({username: username, password: password}),
             success: function (response, textStatus, xhr) {
                 if (xhr.status === 200) {
+                    console.log(response);
+                    localStorage.setItem('userId', response.id);
                     if (response.isAdmin) {
                         setCookie('userId', response.id, 3);
                         window.location.href = 'http://localhost/admin-page/admin-page.html';
