@@ -1,12 +1,13 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Initialize an array to store the product IDs in the cart
-    let cart = ['66d77e8467fccd6f0ee32391', '66d46fbc0e20da17dbd737cb']; // Example product ID
+    // let cart = ['66d77e8467fccd6f0ee32391', '66d46fbc0e20da17dbd737cb']; // Example product ID
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     // Function to fetch product details and render the cart items
     function loadCart() {
         const $cartItems = $('#cartItems');
         $cartItems.empty(); // Clear previous items before appending new ones
-    
+
         if (cart.length === 0) {
             $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
@@ -19,16 +20,16 @@ $(document).ready(function() {
                     contentType: 'application/json'
                 })
             );
-    
+
             // Wait for all product details to be fetched
             Promise.all(fetchPromises)
                 .then(products => {
                     let totalPrice = 0; // Initialize total price
-    
+
                     products.forEach((product, index) => {
                         // Add product's price to total price
                         totalPrice += product.price;
-    
+
                         // Append product details to cart
                         $cartItems.append(`
                             <div class="product-item">
@@ -41,7 +42,7 @@ $(document).ready(function() {
                             </div>
                         `);
                     });
-    
+
                     // Append total price before the Buy Now button
                     $cartItems.append(`
                         <div class="cart-total">
@@ -49,7 +50,7 @@ $(document).ready(function() {
                             <p id="usdTotal"></p>
                         </div>
                     `);
-    
+
                     $('#buyNowButton').show(); // Show the Buy Now button
 
                     // Fetch and display USD equivalent
@@ -62,6 +63,7 @@ $(document).ready(function() {
                 });
         }
     }
+
     
     // Function to fetch USD equivalent
     function fetchUSDEquivalent(ilsAmount) {
@@ -88,6 +90,7 @@ $(document).ready(function() {
         });
     }
 
+
     // Function to save the order by sending the cart list to the server
     function saveOrder(cart) {
         const userId = '66d7590f82a6a9a4dfa61d46'; // Example user ID
@@ -103,26 +106,26 @@ $(document).ready(function() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(order),
-            success: function(response) {
+            success: function (response) {
                 alert('Order placed successfully!');
                 cart = []; // Clear the cart array
                 loadCart(); // Refresh cart view
             },
-            error: function(error) {
+            error: function (error) {
                 console.error('Error placing order:', error);
             }
         });
     }
 
     // Event handler to remove a product from the cart
-    $('#cartItems').on('click', '.remove-button', function() {
+    $('#cartItems').on('click', '.remove-button', function () {
         const index = $(this).data('index');
         cart.splice(index, 1); // Remove the product from the cart array
         loadCart(); // Refresh cart view
     });
 
     // Event handler for the "Buy Now" button
-    $('#buyNowButton').click(function() {
+    $('#buyNowButton').click(function () {
         if (cart.length > 0) {
             saveOrder(cart);
         } else {
