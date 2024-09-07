@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  const apiUrl = 'http://localhost:80/supplier'; // Replace with your actual backend API URL
+  const apiUrl = 'http://localhost:80/api'; // Replace with your actual backend API URL
   const getSuppliers = 'suppliers'
   let editingSupplierId = null;
   let currentSuppliers = []
@@ -75,8 +75,8 @@ $(document).ready(function() {
       } else {
           // Create new supplier
           $.ajax({
-              url: apiUrl, // TODO: implement the add supplier route
-              method: 'POST',
+            url: `${apiUrl}/supplier`,
+            method: 'POST',
               data: JSON.stringify(supplierData),
               contentType: 'application/json',
               success: function() {
@@ -126,7 +126,7 @@ $(document).ready(function() {
       const supplierId = $(this).data('id');
       if (confirm('Are you sure you want to delete this supplier?')) {
           $.ajax({
-              url: `${apiUrl}/${supplierId}`,
+              url: `${apiUrl}/supplier/${supplierId}`,
               method: 'DELETE',
               success: function() {
                   fetchSuppliers();
