@@ -128,6 +128,7 @@ $(document).ready(function () {
     $('#cartItems').on('click', '.remove-button', function () {
         const index = $(this).data('index');
         cart.splice(index, 1); // Remove the product from the cart array
+        localStorage.setItem('cart', JSON.stringify(cart))
         loadCart(); // Refresh cart view
     });
 

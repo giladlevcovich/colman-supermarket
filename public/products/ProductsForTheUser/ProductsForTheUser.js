@@ -72,10 +72,9 @@ $(document).ready(function () {
         });
     }
 
-    let cart = [];
-
     function addToCart(productId) {
         // Check if the product already exists in the cart
+        let cart = JSON.parse(localStorage.getItem('cart')) ?? []
         const existingProduct = cart.find(item => item.productId === productId);
 
         if (existingProduct) {
