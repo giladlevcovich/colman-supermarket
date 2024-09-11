@@ -14,9 +14,9 @@
             margin-bottom: 20px;
         }
     </style>
-     <!-- Bootstrap JS and dependencies (Popper.js) -->
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="supplierView.js"></script>
+    <script src="../../utils/index.js"></script>
 </head>
 <body>
     
@@ -24,7 +24,7 @@
 
         <div class="header-buttons">
             <div class="buttons">
-                <button onclick="navigateTo('../../admin-page/admin-page.html')">AdminPage</button>
+                <button onclick="navigateTo('../../admin-page/admin-page.html')">Home Page</button>
                 <button onclick="navigateTo('../suppliersEditPage/supplierView.html')">Suppliers</button>
                 <button onclick="navigateTo('../suppliersMap/suppliersMap.html')">Suppliers Locations</button>
             </div>
@@ -32,7 +32,6 @@
 
         <h1 class="text-center mb-4">Supplier Management</h1>
         
-        <!-- Suppliers Table -->
         <div class="card mb-5">
             <div class="card-header">
                 <h3 class="mb-0">Suppliers List</h3>
@@ -50,13 +49,11 @@
                         </tr>
                     </thead>
                     <tbody id="supplierTableBody">
-                        <!-- Suppliers will be dynamically populated here -->
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- Supplier Form -->
         <div class="card">
             <div class="card-header">
                 <h3 id="formTitle" class="mb-0">Add New Supplier</h3>
