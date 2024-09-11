@@ -123,3 +123,29 @@ body {
         margin-top: 10px;
     }
 }
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.quantity-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity-number {
+    padding: 0 15px;
+    font-size: 16px;
+}

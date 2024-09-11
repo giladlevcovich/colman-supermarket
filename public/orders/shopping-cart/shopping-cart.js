@@ -43,17 +43,21 @@ $(document).ready(function () {
                         totalPrice += itemTotalPrice;
 
                         $cartItems.append(`
-                        <div class="product-item">
-                            <img src="${product.image}" alt="${product.name}">
-                            <div class="product-details">
-                                <p><strong>${product.name}</strong></p>
-                                <p>Price: ${product.price}₪</p>
-                                <p>Quantity: ${product.quantity}</p>
-                                <p>Total: ${itemTotalPrice}₪</p>
+                            <div class="product-item">
+                                <img src="${product.image}" alt="${product.name}">
+                                <div class="product-details">
+                                    <p><strong>${product.name}</strong></p>
+                                    <p>Price: ${product.price}₪</p>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn decrease" data-index="${index}">-</button>
+                                        <span class="quantity-number">${product.quantity}</span>
+                                        <button class="quantity-btn increase" data-index="${index}">+</button>
+                                    </div>
+                                    <p>Total: ${itemTotalPrice}₪</p>
+                                </div>
+                                <button class="remove-button" data-index="${index}">X</button>
                             </div>
-                            <button class="remove-button" data-index="${index}">X</button>
-                        </div>
-                    `);
+                            `);
                     });
 
                     $cartItems.append(`
@@ -72,28 +76,6 @@ $(document).ready(function () {
                     $('#buyNowButton').hide();
                 });
         }
-    }
-
-    function fetchUSDEquivalent(ilsAmount) {
-        const apiKey = '124d94306a5cf25f0c7da8a0';
-        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/ILS`;
-
-        $.ajax({
-            url: apiUrl,
-            method: 'GET',
-            success: function (response) {
-                if (response.result === 'success') {
-                    const usdRate = response.conversion_rates.USD;
-                    const usdAmount = (ilsAmount * usdRate).toFixed(2);
-                    $('#usdTotal').text(`Total Price in USD: $${usdAmount}`);
-                } else {
-                    $('#usdTotal').text('USD conversion unavailable');
-                }
-            },
-            error: function () {
-                $('#usdTotal').text('USD conversion unavailable');
-            }
-        });
     }
 
     function saveOrder() {
@@ -118,7 +100,7 @@ $(document).ready(function () {
             success: function () {
                 alert('Order placed successfully!');
                 cart = []; // Clear the cart array
-                localStorage.removeItem('cart'); // Clear the cart in localStorage
+                localStorage.setItem('cart', JSON.stringify(cart)); // Clear the cart in localStorage
                 loadCart(); // Refresh cart view
             },
             error: function (error) {
@@ -141,6 +123,45 @@ $(document).ready(function () {
             alert('Your cart is empty.');
         }
     });
+
+    $('#cartItems').on('click', '.increase', function () {
+        const index = $(this).data('index');
+        cart[index].quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+    });
+    
+    $('#cartItems').on('click', '.decrease', function () {
+        const index = $(this).data('index');
+        if (cart[index].quantity > 1) {
+            cart[index].quantity -= 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+    });
+    
+
+    function fetchUSDEquivalent(ilsAmount) {
+        const apiKey = '124d94306a5cf25f0c7da8a0';
+        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/ILS`;
+
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function (response) {
+                if (response.result === 'success') {
+                    const usdRate = response.conversion_rates.USD;
+                    const usdAmount = (ilsAmount * usdRate).toFixed(2);
+                    $('#usdTotal').text(`Total Price in USD: $${usdAmount}`);
+                } else {
+                    $('#usdTotal').text('USD conversion unavailable');
+                }
+            },
+            error: function () {
+                $('#usdTotal').text('USD conversion unavailable');
+            }
+        });
+    }
 
     loadCart();
 });
