@@ -1,5 +1,46 @@
 $(document).ready(function() {
-    const userId = '66d7590582a6a9a4dfa61d44'; // Replace with the actual logged-in user's ID
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Function to check if the user is an admin
+    function isAdminUser(userId) {
+        return $.ajax({
+            url: `http://localhost:80/api/users/${userId}`, // Adjust URL as needed
+            method: 'GET',
+            success: function(user) {
+                console.log('User Data:', user); // Debugging line
+                return user.isAdmin;
+            },
+            error: function() {
+                console.error('Error fetching user data.');
+                return false; // Default to not admin if there's an error
+            }
+        });
+    }
+
+    const userId = getCookie('userId');
+    if (!userId) {
+        alert("User not found. Please log in.");
+        return;
+    }
+
+    // Check if the user is an admin and hide the cart button if so
+    isAdminUser(userId).then(isAdmin => {
+        console.log('Is Admin:', isAdmin); // Log admin status for debugging
+        if (isAdmin) {
+            $('.header-button-shopping-cart').hide();
+        }
+    }).catch(error => {
+        console.error('Error checking admin status:', error);
+    });
 
     function fetchOrders(startDate = '', endDate = '') {
         const queryParams = [];
