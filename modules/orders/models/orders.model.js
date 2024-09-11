@@ -17,15 +17,23 @@ const orderSchema = new Schema({
         }
     },
     products: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
-        validate: {
-            validator: async function(value) {
-                const productExists = await Product.exists({ _id: value });
-                return productExists;
-            },
-            message: 'One or more product IDs do not exist in the database'
+        _id: false, // instead of extea object
+        productId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Product',
+            required: true,
+            validate: {
+                validator: async function(value) {
+                    const productExists = await Product.exists({ _id: value });
+                    return productExists;
+                },
+                message: 'One or more product IDs do not exist in the database'
+            }
+        },
+        quantity: {
+            type: Number,
+            required: true,
+            min: [1, 'Quantity must be at least 1']
         }
     }],
     totalPrice: {
@@ -39,8 +47,17 @@ const orderSchema = new Schema({
 });
 
 orderSchema.pre('save', async function(next) {
-    const productPrices = await Product.find({ _id: { $in: this.products } }).select('price');
-    this.totalPrice = productPrices.reduce((total, product) => total + product.price, 0);
+    const productsInCart = this.products;
+    let total = 0;
+
+    for (let item of productsInCart) {
+        const product = await Product.findById(item.productId).select('price');
+        if (product) {
+            total += product.price * item.quantity;
+        }
+    }
+
+    this.totalPrice = total;
     next();
 });
 

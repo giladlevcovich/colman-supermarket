@@ -1,18 +1,26 @@
 $(document).ready(function () {
-    // Initialize an array to store the product IDs in the cart
-    // let cart = ['66d77e8467fccd6f0ee32391', '66d46fbc0e20da17dbd737cb']; // Example product ID
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Function to fetch product details and render the cart items
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Load the cart items and display them
     function loadCart() {
         const $cartItems = $('#cartItems');
-        $cartItems.empty(); // Clear previous items before appending new ones
+        $cartItems.empty();
 
         if (cart.length === 0) {
             $cartItems.html('<p id="emptyCartMessage">Your shopping cart is empty. Please add products to your cart.</p>');
             $('#buyNowButton').hide();
         } else {
-            // Fetch product details for each product in the cart
             const fetchPromises = cart.map(cartItem =>
                 $.ajax({
                     url: `http://localhost:80/api/products/${cartItem.productId}`,
@@ -21,21 +29,19 @@ $(document).ready(function () {
                 }).then(product => {
                     return {
                         ...product,
-                        quantity: cartItem.quantity // Include quantity from cart
+                        quantity: cartItem.quantity
                     };
                 })
             );
 
-            // Wait for all product details to be fetched
             Promise.all(fetchPromises)
                 .then(products => {
-                    let totalPrice = 0; // Initialize total price
+                    let totalPrice = 0;
 
                     products.forEach((product, index) => {
                         const itemTotalPrice = product.price * product.quantity;
-                        totalPrice += itemTotalPrice; // Add item's total price to total price
+                        totalPrice += itemTotalPrice;
 
-                        // Append product details to cart
                         $cartItems.append(`
                         <div class="product-item">
                             <img src="${product.image}" alt="${product.name}">
@@ -50,7 +56,6 @@ $(document).ready(function () {
                     `);
                     });
 
-                    // Append total price before the Buy Now button
                     $cartItems.append(`
                     <div class="cart-total">
                         <p><strong>Total Price: ${totalPrice}₪</strong></p>
@@ -58,21 +63,17 @@ $(document).ready(function () {
                     </div>
                 `);
 
-                    $('#buyNowButton').show(); // Show the Buy Now button
-
-                    // Fetch and display USD equivalent
+                    $('#buyNowButton').show();
                     fetchUSDEquivalent(totalPrice);
                 })
                 .catch(error => {
                     console.error('Error fetching products:', error);
-                    $cartItems.html('<p id="emptyCartMessage">Error loading cart items.</p>');
+                    $cartItems.html('<p>Error loading cart items.</p>');
                     $('#buyNowButton').hide();
                 });
         }
     }
 
-    
-    // Function to fetch USD equivalent
     function fetchUSDEquivalent(ilsAmount) {
         const apiKey = '124d94306a5cf25f0c7da8a0';
         const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/ILS`;
@@ -80,31 +81,32 @@ $(document).ready(function () {
         $.ajax({
             url: apiUrl,
             method: 'GET',
-            success: function(response) {
+            success: function (response) {
                 if (response.result === 'success') {
                     const usdRate = response.conversion_rates.USD;
                     const usdAmount = (ilsAmount * usdRate).toFixed(2);
                     $('#usdTotal').text(`Total Price in USD: $${usdAmount}`);
                 } else {
-                    console.error('Error fetching exchange rate:', response.error-type);
                     $('#usdTotal').text('USD conversion unavailable');
                 }
             },
-            error: function(error) {
-                console.error('Error fetching exchange rate:', error);
+            error: function () {
                 $('#usdTotal').text('USD conversion unavailable');
             }
         });
     }
 
+    function saveOrder() {
+        const userId = getCookie('userId');
+        if (!userId) {
+            alert("User not found. Please log in.");
+            return;
+        }
 
-    // Function to save the order by sending the cart list to the server
-    function saveOrder(cart) {
-        const userId = '66d7590f82a6a9a4dfa61d46'; // Example user ID
         const order = {
             user: userId,
             products: cart,
-            totalPrice: cart.reduce((total, item) => total + item.price, 0),
+            totalPrice: cart.reduce((total, item) => total + item.price * item.quantity, 0),
             date: new Date()
         };
 
@@ -113,9 +115,10 @@ $(document).ready(function () {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(order),
-            success: function (response) {
+            success: function () {
                 alert('Order placed successfully!');
                 cart = []; // Clear the cart array
+                localStorage.removeItem('cart'); // Clear the cart in localStorage
                 loadCart(); // Refresh cart view
             },
             error: function (error) {
@@ -124,23 +127,20 @@ $(document).ready(function () {
         });
     }
 
-    // Event handler to remove a product from the cart
     $('#cartItems').on('click', '.remove-button', function () {
         const index = $(this).data('index');
-        cart.splice(index, 1); // Remove the product from the cart array
-        localStorage.setItem('cart', JSON.stringify(cart))
-        loadCart(); // Refresh cart view
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
     });
 
-    // Event handler for the "Buy Now" button
     $('#buyNowButton').click(function () {
         if (cart.length > 0) {
-            saveOrder(cart);
+            saveOrder();
         } else {
             alert('Your cart is empty.');
         }
     });
 
-    // Initial load of the cart
     loadCart();
 });
