@@ -21,18 +21,17 @@
 <body>
     
     <div class="container mt-5">
-
         <div class="header-buttons">
-            <div class="buttons">
-                <button onclick="navigateTo('../../admin-page/admin-page.html')">AdminPage</button>
-                <button onclick="navigateTo('../suppliersEditPage/supplierView.html')">Suppliers</button>
-                <button onclick="navigateTo('../suppliersMap/suppliersMap.html')">Suppliers Locations</button>
+                <a href="../../admin-page/admin-page.html"  class="header-button">
+                    <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-webpage-small-icon/home-page-161.png">
+                </a>
+            <div class="supplier-buttons">
+                <button onclick="navigateTo('../suppliersMap/suppliersMap.html')" class="header-button"> <img src="https://cdn.iconscout.com/icon/free/png-256/free-location-icon-download-in-svg-png-gif-file-formats--marker-pointer-map-pin-navigation-finance-and-economy-pack-business-icons-2561454.png?f=webp&w=256"></button>
             </div>
         </div>
 
         <h1 class="text-center mb-4">Supplier Management</h1>
-        
-        <!-- Suppliers Table -->
+
         <div class="card mb-5">
             <div class="card-header">
                 <h3 class="mb-0">Suppliers List</h3>

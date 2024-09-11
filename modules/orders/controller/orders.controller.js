@@ -165,7 +165,7 @@ exports.getTotalPriceByUserId = async (req, res) => {
 exports.getOrdersCountByDate = async (req, res) => {
     try {
         const { date } = req.params;
-        
+
         // Convert the input to the date format
         const [day, month, year] = date.split('-');
         const startDate = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
@@ -181,4 +181,5 @@ exports.getOrdersCountByDate = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 

@@ -19,8 +19,6 @@ h1 {
     max-width: 1200px;
     margin: 0 auto;
 }
-
-/* עיצוב כפתורים ותפריטים עליונים */
 .header-buttons {
     display: flex;
     justify-content: space-between;
@@ -36,15 +34,17 @@ h1 {
     left: 0;
 }
 
-.left-icon {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: row;
+.header-button img{
+    height: 55px;
+    width: 55px;
 }
 
-.header-button-shopping-cart img {
-    width: 40px;
-    height: 40px;
+.header-button:hover {
+    background-color: rgba(214, 220, 220, 0.32);
+    transform: scale(1.1);
+}
+.header-button{
+    background: white;
 }
 
 /* עיצוב שדות חיפוש */

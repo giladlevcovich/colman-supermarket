@@ -144,3 +144,30 @@
 .createButton:hover{
     background-color: #176abc;
 }
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    background-color: #f8f8f8;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    box-sizing: border-box;
+    left: 0;
+}
+
+.header-button img{
+    height: 55px;
+    width: 55px;
+}
+
+.header-button:hover {
+    background-color: rgba(214, 220, 220, 0.32);
+    transform: scale(1.1);
+}
+.header-button{
+    background: white;
+}

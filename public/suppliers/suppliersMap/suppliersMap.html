@@ -15,13 +15,14 @@
 
 </head>
 <body>
-    <div class="header-buttons">
-        <div class="buttons">
-            <button onclick="navigateTo('../../admin-page/admin-page.html')">AdminPage</button>
-            <button onclick="navigateTo('../suppliersEditPage/supplierView.html')">Suppliers</button>
-            <button onclick="navigateTo('../suppliersMap/suppliersMap.html')">Suppliers Locations</button>
-        </div>
+<div class="header-buttons">
+    <a href="../../admin-page/admin-page.html"  class="header-button">
+        <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-webpage-small-icon/home-page-161.png">
+    </a>
+    <div class="supplier-buttons">
+        <button onclick="navigateTo('../suppliersEditPage/supplierView.html')" >Suppliers</button>
     </div>
+</div>
     <div class="container">
         <h1 class="my-4">Supplier Locations</h1>
         <div id="map"></div>
