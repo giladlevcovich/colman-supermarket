@@ -1,6 +1,4 @@
-// Load user data and create charts
 function loadUserData(userId) {
-    // Get user's orders
     $.ajax({
         url: `http://localhost:80/api/orders/user-orders/${userId}`,
         type: 'GET',
@@ -15,7 +13,6 @@ function loadUserData(userId) {
     });
 }
 
-// Create order count chart
 function createOrderCountChart(orders) {
     const orderDates = orders.map(order => new Date(order.date).toLocaleDateString());
     const orderCounts = {};
@@ -64,7 +61,6 @@ function createOrderCountChart(orders) {
     });
 }
 
-// Create daily spending chart
 function createDailySpendingChart(orders) {
     const dailySpending = {};
     orders.forEach(order => {
@@ -113,24 +109,40 @@ function createDailySpendingChart(orders) {
     });
 }
 
-// Create most purchased products chart
-function createMostPurchasedProductsChart(orders) {
+async function createMostPurchasedProductsChart(orders) {
     const productCounts = {};
     orders.forEach(order => {
         order.products.forEach(product => {
-            productCounts[product.name] = (productCounts[product.name] || 0) + 1;
+            if (product.productId) {
+                productCounts[product.productId] = (productCounts[product.productId] || 0) + product.quantity;
+            }
         });
     });
 
     const sortedProducts = Object.entries(productCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 5); // Get top 5 most purchased products
+        .slice(0, 5);
+
+    // Fetch product names
+    const productNames = await Promise.all(
+        sortedProducts.map(async ([productId]) => {
+            try {
+                const response = await fetch(`http://localhost:80/api/products/${productId}`);
+                if (!response.ok) throw new Error('Product not found');
+                const product = await response.json();
+                return product.name;
+            } catch (error) {
+                console.error(`Error fetching product ${productId}:`, error);
+                return `Unknown (${productId})`;
+            }
+        })
+    );
 
     const ctx = document.getElementById('mostPurchasedProductsChart').getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: sortedProducts.map(product => product[0]),
+            labels: productNames,
             datasets: [{
                 label: 'Number of Purchases',
                 data: sortedProducts.map(product => product[1]),
@@ -146,6 +158,13 @@ function createMostPurchasedProductsChart(orders) {
                 title: {
                     display: true,
                     text: 'Top 5 Most Purchased Products'
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            return `Product: ${tooltipItems[0].label}`;
+                        }
+                    }
                 }
             },
             scales: {
@@ -160,6 +179,14 @@ function createMostPurchasedProductsChart(orders) {
                     title: {
                         display: true,
                         text: 'Product Name'
+                    },
+                    ticks: {
+                        callback: function(value, index) {
+                            // Truncate long product names
+                            return this.getLabelForValue(value).length > 15 
+                                ? this.getLabelForValue(value).substr(0, 15) + '...'
+                                : this.getLabelForValue(value);
+                        }
                     }
                 }
             }
