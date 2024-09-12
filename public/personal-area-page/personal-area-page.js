@@ -6,7 +6,6 @@ $(document).ready(function() {
         return;
     }
 
-    // Load user data
     $.ajax({
         url: `http://localhost:80/api/users/${userId}`,
         type: 'GET',
@@ -21,20 +20,17 @@ $(document).ready(function() {
         }
     });
 
-    // Toggle edit profile form
     $('#editProfileBtn').click(function() {
         $('#greeting').hide();
         $('#profileForm').show();
         $('#userDataSection').hide();
     });
 
-    // Cancel edit profile
     $('#cancelBtn').click(function() {
         $('#profileForm').hide();
         $('#greeting').show();
     });
 
-    // Handle form submission
     $('#editProfileForm').submit(function(e) {
         e.preventDefault();
 
@@ -65,7 +61,6 @@ $(document).ready(function() {
         });
     });
 
-    // Toggle user data section
     $('#userDataBtn').click(function() {
         $('#greeting').hide();
         $('#profileForm').hide();
