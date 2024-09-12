@@ -10,37 +10,11 @@ $(document).ready(function() {
         return null;
     }
 
-    // Function to check if the user is an admin
-    function isAdminUser(userId) {
-        return $.ajax({
-            url: `http://localhost:80/api/users/${userId}`, // Adjust URL as needed
-            method: 'GET',
-            success: function(user) {
-                console.log('User Data:', user); // Debugging line
-                return user.isAdmin;
-            },
-            error: function() {
-                console.error('Error fetching user data.');
-                return false; // Default to not admin if there's an error
-            }
-        });
-    }
-
     const userId = getCookie('userId');
     if (!userId) {
         alert("User not found. Please log in.");
         return;
     }
-
-    // Check if the user is an admin and hide the cart button if so
-    isAdminUser(userId).then(isAdmin => {
-        console.log('Is Admin:', isAdmin); // Log admin status for debugging
-        if (isAdmin) {
-            $('.header-button-shopping-cart').hide();
-        }
-    }).catch(error => {
-        console.error('Error checking admin status:', error);
-    });
 
     function fetchOrders(startDate = '', endDate = '') {
         const queryParams = [];
@@ -95,7 +69,7 @@ $(document).ready(function() {
                 if (Array.isArray(products) && products.length > 0) {
                     products.forEach(product => {
                         productList.append(`
-                            <p><strong>${product.name}</strong> - ${product.price}₪ </p>
+                            <p><strong>${product.name}</strong> - ${product.price}₪, Quantity: ${product.quantity}</p>
                         `);
                     });
                     productList.slideDown();
@@ -109,7 +83,7 @@ $(document).ready(function() {
             }
         });
     }
-
+    
     $('#filterButton').click(function() {
         const startDate = $('#startDate').val();
         const endDate = $('#endDate').val();

@@ -37,16 +37,21 @@ exports.getProductsByOrderId = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        // Find the order by ID and populate the products
-        const order = await Order.findById(orderId).populate('products', 'name price');
+        // Find the order by ID and populate the productId with name and price
+        const order = await Order.findById(orderId).populate('products.productId', 'name price');
 
-        // Check if the order exists
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        // Return the products of the order
-        res.status(200).json(order.products);
+        // Create an array of products with name, price, and quantity
+        const productsWithDetails = order.products.map(product => ({
+            name: product.productId.name,
+            price: product.productId.price,
+            quantity: product.quantity
+        }));
+
+        res.status(200).json(productsWithDetails);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
