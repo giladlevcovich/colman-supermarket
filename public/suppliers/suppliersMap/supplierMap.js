@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:80/api/suppliers')
-        .then(response => response.json())
-        .then(suppliers => {
+    $.ajax({
+        url: 'http://localhost:80/api/suppliers',
+        method: 'GET',
+        dataType: 'json',
+        success: (suppliers) => {
             initMap(suppliers);
-        })
-        .catch(error => console.error('Error:', error));
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
+    });
 });
 
 function initMap(suppliers) {
@@ -51,13 +56,21 @@ function navigateTo(page) {
          }
      };
 
-     const res = await fetch(url, options);
-     const resultJson = await res.json();
-    return  {
-        temp: resultJson.current.temp_c,
-        condition_text: resultJson.current.condition.text,
-        icon: resultJson.current.condition.icon
-    }
-
-
+     return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            method: options.method,
+            headers: options.headers,
+            success: function(resultJson) {
+                resolve({
+                    temp: resultJson.current.temp_c,
+                    condition_text: resultJson.current.condition.text,
+                    icon: resultJson.current.condition.icon
+                });
+            },
+            error: function(xhr, status, error) {
+                reject(error);
+            }
+        });
+    });
 }
