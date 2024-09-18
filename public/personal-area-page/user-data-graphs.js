@@ -123,7 +123,6 @@ async function createMostPurchasedProductsChart(orders) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5);
 
-    // Fetch product names
     const productNames = await Promise.all(
         sortedProducts.map(async ([productId]) => {
             try {
