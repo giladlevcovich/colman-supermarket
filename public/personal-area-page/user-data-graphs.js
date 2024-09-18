@@ -123,7 +123,6 @@ async function createMostPurchasedProductsChart(orders) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5);
 
-    // Fetch product names
     const productNames = await Promise.all(
         sortedProducts.map(async ([productId]) => {
             try {
@@ -182,7 +181,6 @@ async function createMostPurchasedProductsChart(orders) {
                     },
                     ticks: {
                         callback: function(value, index) {
-                            // Truncate long product names
                             return this.getLabelForValue(value).length > 15 
                                 ? this.getLabelForValue(value).substr(0, 15) + '...'
                                 : this.getLabelForValue(value);
