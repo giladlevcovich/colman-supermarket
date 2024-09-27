@@ -5,9 +5,9 @@ $(document).ready(function() {
   let currentSuppliers = []
 
   // Function to fetch suppliers and populate the table
-  function fetchSuppliers() {
+  function fetchSuppliers(name = '') {
       $.ajax({
-          url: `${apiUrl}/${getSuppliers}`,
+          url: `${apiUrl}/${getSuppliers}?name=${name}`,
           method: 'GET',
           success: function(suppliers) {
               currentSuppliers = suppliers;
@@ -30,6 +30,12 @@ $(document).ready(function() {
           }
       });
   }
+
+  // Search functionality
+  $('#searchSupplier').on('keyup', function() {
+    const query = $(this).val();
+    fetchSuppliers(query); // Fetch suppliers based on search input
+  });
 
   // Fetch suppliers when the page loads
   fetchSuppliers();

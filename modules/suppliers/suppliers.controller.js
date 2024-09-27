@@ -13,8 +13,11 @@ exports.createSupplier = async (req, res) => {
 
 
 exports.getAllSuppliers = async (req, res) => {
+    const name = req.query.name || '';
+
     try {
-        const suppliers = await Supplier.find();
+        // will return everything when name is empty
+        const suppliers = await Supplier.find({ name: { $regex: name, $options: 'i' } });
         res.status(200).json(suppliers);
     } catch (error) {
         res.status(500).json({ error: error.message });
