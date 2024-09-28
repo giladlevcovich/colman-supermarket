@@ -78,21 +78,15 @@ $(document).ready(function () {
         const existingProduct = cart.find(item => item.productId === productId);
 
         if (existingProduct) {
-            // If the product exists, increase its quantity
             existingProduct.quantity += 1;
         } else {
-            // If the product doesn't exist, add it to the cart with a quantity of 1
             cart.push({ productId: productId, quantity: 1 });
         }
-
-        // Save the updated cart to localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
-
-        console.log('Current cart:', cart); // Debugging: Display the current cart
+        console.log('Current cart:', cart);
         alert('Product added to cart!');
     }
 
-// Event listener for "Add to Cart" button click
     $(document).on('click', '.add-to-cart-button', function () {
         const productId = $(this).data('id');
         if (productId) {
