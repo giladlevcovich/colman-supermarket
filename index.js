@@ -3,6 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+// Put attention to the env file on your project. it should be .env (starts with dot)
+require('dotenv').config();
+
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -18,7 +21,7 @@ app.use('/api', supplierRouter);
 app.use('/api', userRouter);
 app.use('/api', orderRouter);
 
-mongoose.connect('mongodb+srv://morankristal:Ramzi123@colman-supermarket-mong.fkyma.mongodb.net/', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
