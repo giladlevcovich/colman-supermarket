@@ -3,7 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+// Put attention to the env file on your project. it should be .env (starts with dot)
 require('dotenv').config();
+
 
 app.use(express.json());
 app.use(express.static('public'));
