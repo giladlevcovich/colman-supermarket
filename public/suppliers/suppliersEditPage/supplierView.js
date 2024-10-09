@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  const apiUrl = 'http://localhost:80/api'; // Replace with your actual backend API URL
+  const apiUrl = 'http://localhost:80/api';
   const getSuppliers = 'suppliers'
   let editingSupplierId = null;
   let currentSuppliers = []

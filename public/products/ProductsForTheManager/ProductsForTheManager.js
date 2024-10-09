@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     function fetchSuppliersCounts() {
         $.ajax({
-            url: 'http://localhost:80/api/products/count-by-supplier', // Your API endpoint
+            url: 'http://localhost:80/api/products/count-by-supplier',
             method: 'GET',
             success: function (response) {
                 $('#result').empty();
