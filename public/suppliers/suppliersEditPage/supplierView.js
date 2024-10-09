@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  const apiUrl = 'http://localhost:80/api'; // Replace with your actual backend API URL
+  const apiUrl = 'http://localhost:80/api';
   const getSuppliers = 'suppliers'
   let editingSupplierId = null;
   let currentSuppliers = []
 
-  // Function to fetch suppliers and populate the table
+
   function fetchSuppliers(name = '') {
       $.ajax({
           url: `${apiUrl}/${getSuppliers}?name=${name}`,
@@ -31,16 +31,15 @@ $(document).ready(function() {
       });
   }
 
-  // Search functionality
+
   $('#searchSupplier').on('keyup', function() {
     const query = $(this).val();
-    fetchSuppliers(query); // Fetch suppliers based on search input
+    fetchSuppliers(query);
   });
 
-  // Fetch suppliers when the page loads
+
   fetchSuppliers();
 
-  // Handle form submission for adding/updating suppliers
   $('#supplierForm').submit(function(event) {
       event.preventDefault();
 
@@ -63,7 +62,6 @@ $(document).ready(function() {
       };
 
       if (editingSupplierId) {
-          // Update supplier
           $.ajax({
               url: `${apiUrl}/updateSupplier/${editingSupplierId}`,
               method: 'PUT',
@@ -79,7 +77,6 @@ $(document).ready(function() {
               }
           });
       } else {
-          // Create new supplier
           $.ajax({
             url: `${apiUrl}/supplier`,
             method: 'POST',
@@ -93,7 +90,6 @@ $(document).ready(function() {
       }
   });
 
-  // Handle edit button click
   $(document).on('click', '.edit-supplier', function() {
       const supplierId = $(this).data('id');
       $.ajax({
@@ -118,7 +114,6 @@ $(document).ready(function() {
       });
   });
 
-  // Handle cancel edit button click
   $('#cancelEditBtn').click(function() {
       $('#supplierForm')[0].reset();
       $('#formTitle').text('Add New Supplier');
@@ -127,7 +122,6 @@ $(document).ready(function() {
       editingSupplierId = null;
   });
 
-  // Handle delete button click
   $(document).on('click', '.delete-supplier', function() {
       const supplierId = $(this).data('id');
       if (confirm('Are you sure you want to delete this supplier?')) {
